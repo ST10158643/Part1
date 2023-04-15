@@ -39,5 +39,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
 
         }
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to Output Ingredients
+        /// </summary>
+        public void DisplayIngredients()
+        {
+            Console.WriteLine("* " + Convert.ToString(this.Quantity) + " " + this.UnitofM + " of " + this.Name);
+
+        }
     }
 }
