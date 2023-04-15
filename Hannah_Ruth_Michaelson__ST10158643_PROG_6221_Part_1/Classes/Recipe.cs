@@ -216,17 +216,52 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
               DisplayMenu();
           }*/
-
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to Rescale Recipe Quantites 
+        /// </summary>
         private void RescaleRecipe()
         {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("\nPlease Select Rescale Option");
+            Console.WriteLine("1. Half Recipe");
+            Console.WriteLine("2. Double Recipe");
+            Console.WriteLine("3. Triple Recipe");
 
-        private void RestRecipe()
+            int option = Convert.ToInt32(Console.ReadLine());
+
+            switch (option)
+            {
+                case 1:
+                    rescale = 0.5;
+                    break;
+                case 2:
+                    rescale = 2.0;
+                    break;
+                case 3:
+                    rescale = 3.0;
+                    break;
+            }
+            foreach (Ingredient ingre in ingArray)
+            {
+                ingre.Quantity *= rescale;
+            }
+            Console.WriteLine("Rescaled Recipe :\n");
+            DisplayRecipe();
+
+        }
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to Rest Recipe Quantites 
+        /// </summary>
+        public void RestRecipe()
         {
-            throw new NotImplementedException();
+            foreach (Ingredient ingre in ingArray)
+            {
+                ingre.Quantity /= rescale;
+            }
+            Console.WriteLine("Original Recipe :\n");
+            DisplayRecipe();
         }
-
         private void ClearData()
         {
             throw new NotImplementedException();
