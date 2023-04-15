@@ -92,7 +92,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Method to Retrieve User Input
         /// </summary>
-        public void RetrieveRecipeData()
+        private void RetrieveRecipeData()
         {
 
             int numSteps = 0;
@@ -158,7 +158,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 }
             } while (numSteps <= 0);
 
-            string[] steps = new string[numSteps];
+            steps = new string[numSteps];
             for (int i = 0; i < numSteps; i++)
             {
                 Console.WriteLine("Please Enter Step " + (i + 1) + " Desciption");
@@ -171,7 +171,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Method to Display Recipe
         /// </summary>
-        public void DisplayRecipe()
+        private void DisplayRecipe()
         {
             int stepCount = 0;
 
