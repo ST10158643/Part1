@@ -8,7 +8,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
     internal class Ingredient
     {
-        
+        private string unitofM = string.Empty;
+
         /// <summary>
         /// Holds the ingredients number 
         /// </summary>
