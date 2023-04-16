@@ -8,7 +8,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
     internal class Ingredient
     {
-        private string unitofM = string.Empty;
+        private string[] UM = { "Teaspoon", "Tablespoon", "Cup" };
+        //  private string unitofM = string.Empty;
 
         /// <summary>
         /// Holds the ingredients number 
@@ -38,6 +39,18 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         public Ingredient()
         {
 
+
+        }
+        public string DetermineUM(string inputUM)
+        {
+            foreach (var item in UM)
+            {
+                if (inputUM.Equals(item))
+                return item;
+                Console.WriteLine("here"+item);
+                continue;
+            }
+            return inputUM;
 
         }
         //---------------------------------------------------------------------------------------------------------//

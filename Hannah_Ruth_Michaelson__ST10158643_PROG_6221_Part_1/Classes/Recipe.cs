@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -141,7 +142,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.WriteLine("Please enter name of ingredient");
                 ing.Name = Console.ReadLine();
                 Console.WriteLine("Please enter the unit of measurement");
-                ing.UnitofM = Console.ReadLine();
+                ing.UnitofM = ing.DetermineUM(Console.ReadLine());
+              //  ing.UnitofM = Console.ReadLine();
                 do
                 {
                     try
@@ -269,8 +271,33 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             {
                 ingre.Quantity *= rescale;
             }
+            ChangeUM();
             Console.WriteLine("Rescaled Recipe :\n");
+            
             DisplayRecipe();
+
+        }
+        public void ChangeUM()
+        { 
+            string[] UM = { "Teaspoon", "Tablespoon", "Cup" };
+            foreach (Ingredient ingre in ingArray)
+            {
+                if (ingre.UnitofM.Equals(UM[0]) && ingre.Quantity >= 3)
+                {
+                    ingre.UnitofM = UM[1];
+                    ingre.Quantity = (ingre.Quantity * 5) / 15;
+                    ingre.Quantity = ((int)ingre.Quantity);
+                    Console.WriteLine("\nTeaspoon Change=" + ingre.Quantity);
+                }
+                else if (ingre.UnitofM.Equals(UM[1]) && ingre.Quantity >= 16)
+                {
+                    ingre.UnitofM = UM[2];
+                    ingre.Quantity = (ingre.Quantity * 15) / 250;
+                    ingre.Quantity = ((int)ingre.Quantity);
+                    Console.WriteLine("\nTablespoon Change=" + ingre.Quantity);
+                }
+
+            }
 
         }
         //---------------------------------------------------------------------------------------------------------//
