@@ -13,6 +13,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// Ingredient CLass Array Object to hold Recipe Ingredients 
         /// </summary>
         private Ingredient[] ingArray;
+        private Ingredient[] RestArray;
         /// <summary>
         /// String Array Object to hold Recipe Steps 
         /// </summary>
@@ -60,7 +61,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 {
                     // int option = Convert.ToInt32(Console.ReadLine());
                     var option = int.Parse(Console.ReadLine());
-                    if (option > 7) { throw new FormatException();}
+                    if (option >= 7) { throw new FormatException();}
 
                     switch (option)
                     {
@@ -142,8 +143,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.WriteLine("Please enter name of ingredient");
                 ing.Name = Console.ReadLine();
                 Console.WriteLine("Please enter the unit of measurement");
-                ing.UnitofM = ing.DetermineUM(Console.ReadLine());
-              //  ing.UnitofM = Console.ReadLine();
+                ing.UnitofM = Console.ReadLine();
                 do
                 {
                     try
@@ -165,6 +165,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     }
                 } while (ing.Quantity < 1);
             }
+            RestArray.Equals(ingArray);
             do
             {
                 try
@@ -201,6 +202,13 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         {
             int stepCount = 0;
 
+            if (numIngs == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!\nCannot Dispay a Recipe"));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplayMenu();
+            }
             Console.Write("Ingredients:\n");
             foreach (Ingredient ingre in ingArray)
             {
@@ -248,6 +256,13 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         private void RescaleRecipe()
         {
+            if (numIngs== 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!\nCannot Reset Recipe"));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplayMenu();
+            }
             Console.WriteLine("\nPlease Select Rescale Option");
             Console.WriteLine("1. Half Recipe");
             Console.WriteLine("2. Double Recipe");
@@ -279,7 +294,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         }
         public void ChangeUM()
         { 
-            string[] UM = { "Teaspoon", "Tablespoon", "Cup" };
+            string[] UM = { "teaspoon", "tablespoon", "cup" };
             foreach (Ingredient ingre in ingArray)
             {
                 if (ingre.UnitofM.Equals(UM[0]) && ingre.Quantity >= 3)
@@ -306,10 +321,27 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         public void RestRecipe()
         {
-            foreach (Ingredient ingre in ingArray)
+            if (rescale < 0.0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "Recipe Has Not Been Rescaled!\nCannot Reset Recipe"));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplayMenu();
+                
+            }else if (numIngs == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!\nCannot Reset Recipe"));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplayMenu();
+            }
+            Array.Copy(ingArray,RestArray,ingArray.Length);
+            
+            /*foreach (Ingredient ingre in ingArray)
             {
                 ingre.Quantity /= rescale;
-            }
+
+            }*/
             Console.WriteLine("Original Recipe :\n");
             DisplayRecipe();
         }
@@ -319,6 +351,13 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         private void ClearData()
         {
+            if (numIngs == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe"));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                DisplayMenu();
+            }
             Console.WriteLine("Are your sure you would like to clear all recipe data?/n" +
                 "1. Yes" +
                 "\n2.Cancel and Return to Menu");
@@ -330,6 +369,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             else
             {
                 Array.Clear(ingArray, 0, ingArray.Length);
+                Array.Clear(RestArray, 0, RestArray.Length);
                 Array.Clear(steps, 0, steps.Length);
 
                 Console.WriteLine("Recipe Cleared!\n Would you like to create a new recipe?");
