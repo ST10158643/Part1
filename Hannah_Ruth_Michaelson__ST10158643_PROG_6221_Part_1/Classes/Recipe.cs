@@ -8,7 +8,13 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
     internal class Recipe
     {
+        /// <summary>
+        /// Ingredient CLass Array Object to hold Recipe Ingredients 
+        /// </summary>
         private Ingredient[] ingArray;
+        /// <summary>
+        /// String Array Object to hold Recipe Steps 
+        /// </summary>
         private string[] steps;
         private int numIngs { get; set; } = 0;
         double rescale = 0.0;
@@ -21,23 +27,31 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         public Recipe()
         {
-            Console.WriteLine("Welcome to Your Personal Digital Recipe Book");
+
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.BackgroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("******************************************************************************************************************");
+            Console.WriteLine(String.Format("{0,-40} {1,-10} {2,-40}", " ","Welcome to Your Personal Digital"," "));
+            Console.WriteLine("******************************************************************************************************************");
+            Console.BackgroundColor = ConsoleColor.Black;
             DisplayMenu();
 
         }
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Dispay Menu
         /// </summary>
-        public void DisplayMenu()
+        public void DisplayMenu() 
         {
-            Console.WriteLine("\nPlease Select Option");
-            Console.WriteLine("1. Create New Recipe");
-            Console.WriteLine("2. Display Recipe");
-            Console.WriteLine("3. Rescale Recipe ");
-            Console.WriteLine("4. Rest Recipe");
-            Console.WriteLine("5. Clear Recipe ");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine(String.Format("\n{0,-40} {1,-10}"," ","Please Select Option"));
+            Console.WriteLine(String.Format("\n{0,-40} {1,-10}", " ", "1. Create New Recipe"));
+            Console.WriteLine(String.Format("{0,-40} {1,-10}"," ", "2. Display Recipe"));
+            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "3. Rescale Recipe "));
+            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "4. Rest Recipe"));
+            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "5. Clear Recipe "));
+            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "6. Exit"));
             bool validOption = true;
             do
             {
@@ -45,7 +59,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 {
                     // int option = Convert.ToInt32(Console.ReadLine());
                     var option = int.Parse(Console.ReadLine());
-                    if (option > 7) { throw new FormatException("Invalid input."); ; }
+                    if (option > 7) { throw new FormatException();}
 
                     switch (option)
                     {
@@ -72,15 +86,19 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 }
                 catch (FormatException)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine($"The number entered is not valid.");
                     Console.WriteLine($"Please enter a number from 1 to 6.");
                     validOption = false;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
 
                 }
                 catch (Exception e)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine($"Unexpected error: {e.Message}");
                     validOption = false;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
 
             } while (!validOption);
@@ -105,12 +123,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     numIngs = Convert.ToInt32(Console.ReadLine());
                     if (numIngs < 1)
                     {
-                        throw new FormatException("Invalid input.");
+                        throw new FormatException();
                     }
                 }
                 catch (FormatException)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Please Enter Valid Number");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
             } while (numIngs < 1);
             ingArray = new Ingredient[numIngs];
@@ -130,14 +150,16 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                         ing.Quantity = Convert.ToDouble(Console.ReadLine());
                         if (ing.Quantity < 1)
                         {
-                            throw new FormatException("Invalid input.");
+                            throw new FormatException("");
                         }
                         else
                             ingArray[i] = ing;
                     }
                     catch (FormatException)
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Please Enter Valid Number");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                     }
                 } while (ing.Quantity < 1);
             }
@@ -154,7 +176,9 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 }
                 catch (FormatException)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkRed; 
                     Console.WriteLine("Please enter a valid number.");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                 }
             } while (numSteps <= 0);
 
@@ -262,14 +286,54 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             Console.WriteLine("Original Recipe :\n");
             DisplayRecipe();
         }
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to Clear Recipe Data
+        /// </summary>
         private void ClearData()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Are your sure you would like to clear all recipe data?/n" +
+                "1. Yes" +
+                "\n2.Cancel and Return to Menu");
+            int option = Convert.ToInt32(Console.ReadLine());
+            if (option != 1)
+            {
+                DisplayMenu();
+            }
+            else
+            {
+                Array.Clear(ingArray, 0, ingArray.Length);
+                Array.Clear(steps, 0, steps.Length);
+
+                Console.WriteLine("Recipe Cleared!\n Would you like to create a new recipe?");
+                Console.WriteLine("1. Create New Recipe");
+                Console.WriteLine("2. Return to Menu");
+                Console.WriteLine("3. Exit");
+
+                option = Convert.ToInt32(Console.ReadLine());
+
+                switch (option)
+                {
+                    case 1:
+                        RetrieveRecipeData();
+                        break;
+                    case 2:
+                        DisplayMenu();
+                        break;
+                    case 3:
+                        EndProg();
+                        break;
+                }
+            }
         }
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to Close Program 
+        /// </summary>
         private void EndProg()
         {
             Console.WriteLine("Enjoy Your Meal!");
             System.Environment.Exit(0);
         }
     }
-}
+}//------------------------------------------...ooo000 END OF FILE 000ooo...--------------------------------//
