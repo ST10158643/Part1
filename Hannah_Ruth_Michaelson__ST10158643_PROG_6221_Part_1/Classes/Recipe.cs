@@ -19,6 +19,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         private string[] steps;
         private int numIngs { get; set; } = 0;
+        private int numSteps { get; set; } = 0;
+
         double rescale = 0.0;
 
         //private string strInput;
@@ -30,30 +32,30 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         public Recipe()
         {
 
-
+            Console.WindowWidth = 67;
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.BackgroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("******************************************************************************************************************");
-            Console.WriteLine(String.Format("{0,-40} {1,-10} {2,-40}", " ","Welcome to Your Personal Digital"," "));
-            Console.WriteLine("******************************************************************************************************************");
+            Console.WriteLine("_--_--_--_--_------------------------------------_--_--_--_--_--");
+            Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-15}", " ", "Welcome to Your Personal Digital", " "));
+            Console.WriteLine("_--_--_--_--_------------------------------------_--_--_--_--_--");
             Console.BackgroundColor = ConsoleColor.Black;
             DisplayMenu();
 
         }
-
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Display Menu
         /// </summary>
         public void DisplayMenu() 
         {
-            Console.WriteLine(String.Format("\n{0,-40} {1,-10}"," ","Please Select Option"));
-            Console.WriteLine(String.Format("\n{0,-40} {1,-10}", " ", "1. Create New Recipe"));
-            Console.WriteLine(String.Format("{0,-40} {1,-10}"," ", "2. Display Recipe"));
-            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "3. Rescale Recipe "));
-            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "4. Rest Recipe"));
-            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "5. Clear Recipe "));
-            Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "6. Exit"));
+            Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please Select Option", " "));
+            Console.WriteLine(String.Format("\n{0,-20} {1,-10}", " ", "1. Create New Recipe", " "));
+            Console.WriteLine(String.Format("{0,-20} {1,-10}", " ", "2. Display Recipe", " "));
+            Console.WriteLine(String.Format("{0,-20} {1,-10}", " ", "3. Rescale Recipe", " "));
+            Console.WriteLine(String.Format("{0,-20} {1,-10}", " ", "4. Reset Recipe", " "));
+            Console.WriteLine(String.Format("{0,-20} {1,-10}", " ", "5. Clear Recipe", " "));
+            Console.WriteLine(String.Format("{0,-20} {1,-10}", " ", "6. Exit", " "));
+            Console.CursorLeft = 15;
             bool validOption = true;
             do
             {
@@ -76,7 +78,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                             RescaleRecipe();
                             break;
                         case 4:
-                            RestRecipe();
+                            ResetRecipe();
                             break;
                         case 5:
                             ClearData();
@@ -114,142 +116,80 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         private void RetrieveRecipeData()
         {
-            int numm,number;
-
-            int numSteps = 0;
+            bool val;
             do
             {
-                try
-                {
-                    Console.WriteLine("\nPlease Enter Number of Ingredient's ");
+                Console.CursorLeft = 15;
+                Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please Enter Number of Ingredient's", " "));
+                string input = Console.ReadLine();
+                this.numIngs = new ValidateInput().ArrayNum(input);
+            } while (numIngs <= 0);
 
-                    var input = Convert.ToString(Console.ReadLine());
-                    if (int.TryParse(input, out numm))
-                        {
-                            Console.WriteLine("The input is a number.");
-                            this.numIngs = numm;
-                        
-                        }   
-                        else
-                        {
-                            number = FindNumber(input);
-                            Console.WriteLine(number);
-                            if (number < 1)// if (number == 1)
-                            {
-                                Console.WriteLine("Invalid input: please enter a number.");
-                                throw new FormatException();
-                            }
-                            else
-                            {
-                                this.numIngs = number;
-                            }
-                    }      
-                   
-                }
-                catch (FormatException)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Please Enter Valid Number");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                }
-            } while (numIngs < 1);
             ingArray = new Ingredient[numIngs];
             RestArray = new Ingredient[numIngs];
+            var ing = new Ingredient();
 
             for (int i = 0; i < numIngs; i++)
             {
-                var ing = new Ingredient();
-                Console.WriteLine("Please enter name of ingredient");
-                ing.Name = Console.ReadLine();
-                //if name is not string 
-                Console.WriteLine("Please enter the unit of measurement");
-                ing.UnitofM = Console.ReadLine().ToLower();
                 do
                 {
-                    try
-                    {
-                        Console.WriteLine("Please enter the quantity");
-                        ing.Quantity = Convert.ToDouble(Console.ReadLine());
-                        if (ing.Quantity < 0.01 )
-                        {
-                            Console.WriteLine("frent");
-                            // throw new FormatException("");
-                        }
-                        else
-                            ingArray[i] = ing;
-                    }
-                    catch (FormatException)
-                    {
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Please Enter Valid Number");
-                        Console.WriteLine("frent");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                    }
-                } while (ing.Quantity < 0.01);
+                    Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please the ingredient's name", " "));
+                    string input = Console.ReadLine();
+                    val = new ValidateInput().IsStringNull(input);
+                    if (val)
+                        ing.Name = input;
+
+                } while (!val);
+
+                do
+                {
+                    Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please enter the unit of measurement", " "));
+                    string input = Console.ReadLine().ToLower();
+                    val = new ValidateInput().IsStringNull(input);
+                    if (val)
+                        ing.UnitofM = input;
+
+                } while (!val);
+                do
+                {
+
+                    Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please enter the quantity", " "));
+                    string input = Console.ReadLine();
+                    ing.Quantity = new ValidateInput().ReceiveDouble(input);
+
+                } while (ing.Quantity <= 0.0);
+
+                ingArray[i] = ing;
             }
-             Array.Copy(ingArray, RestArray, ingArray.Length);
+            Array.Copy(ingArray, RestArray, ingArray.Length);
+
             /* for (int i = 0; i < ingArray.Length; i++)
             { 
                 RestArray[i] = ingArray[i];
             }*/
 
-
-                do
+            do
             {
-                try
-                {
-                    Console.WriteLine("Please enter Number of Recipe Steps ");
-                    numSteps = Convert.ToInt32(Console.ReadLine());
-                    if (numSteps <= 0)
-                    {
-                        throw new FormatException("Invalid input.");
-                    }
-                }
-                catch (FormatException)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkRed; 
-                    Console.WriteLine("Please enter a valid num.");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                }
+                Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please enter Number of Recipe Steps", " "));
+                string input = Console.ReadLine();
+                numSteps = new ValidateInput().ArrayNum(input);
+
             } while (numSteps <= 0);
 
             steps = new string[numSteps];
             for (int i = 0; i < numSteps; i++)
             {
-                Console.WriteLine("Please Enter Step " + (i + 1) + " Desciption");
-                steps[i] = Console.ReadLine();
+                do
+                {
+                    Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Please Enter Step " + (i + 1) + " Description", " "));
+                    string input = Console.ReadLine();
+                    val = new ValidateInput().IsStringNull(input);
+                    if (val)
+                        steps[i] = input;
+                } while (!val);
             }
-
             DisplayMenu();
         }
-        private int FindNumber(string input)
-        {
-            int number = -1;
-
-                Dictionary<string, int> numberWords = new Dictionary<string, int>()
-                {
-                    {"zero", 0},
-                    {"one", 1},
-                    {"two", 2},
-                    {"three", 3},
-                    {"four", 4},
-                    {"five", 5},
-                    {"six", 6},
-                    {"seven", 7},
-                    {"eight", 8},
-                    {"nine", 9},
-                    {"ten", 10},
-                    // Add more entries for other numbers as needed
-                };
-                if (numberWords.ContainsKey(input.ToLower()))
-                return numberWords[input.ToLower()];
-                else return number;
-                
-               /* else
-                {
-                    throw new ArgumentException("Input is not a valid number word.");
-                }*/
-            }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Display Recipe
@@ -261,45 +201,45 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Dispay a Recipe"));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "No Recipes Found!, Cannot Display a Recipe", " "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
-            Console.Write("Ingredients:\n");
+            Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Ingredients:\n", " "));
             foreach (Ingredient ingre in ingArray)
             {
                 ingre.DisplayIngredients();
             }
-            Console.Write("Directions:\n");
+            Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Directions:\n", " "));
             foreach (string step in steps)
             {
                 stepCount++;
-                Console.WriteLine("Step \n* " + stepCount + " " + step);
+                //// Console.WriteLine(String.Format("\n{0,-40} {1,-10}", " ", "Ingredients:\n", " "));
+                Console.WriteLine(String.Format("\n{0,-15} {1,-10}", " ", "Step \n* " + stepCount + " " + step));
             }
 
             DisplayMenu();
         }
-        
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Rescale Recipe Quantities 
         /// </summary>
         private void RescaleRecipe()
         {
-            if (numIngs== 0)
+            if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe", " "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
-            Console.WriteLine("\nPlease Select Rescale Option");
-            Console.WriteLine("1. Half Recipe");
-            Console.WriteLine("2. Double Recipe");
-            Console.WriteLine("3. Triple Recipe");
-
-            int option = Convert.ToInt32(Console.ReadLine());
-
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "\nPlease Select Rescale Option", " "));
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1.Half Recipe", " "));
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "2. Double Recipe", " "));
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "3. Triple Recipe", " "));
+            string input = Console.ReadLine();
+            int option = new ValidateInput().ArrayNum(input);
             switch (option)
             {
                 case 1:
@@ -317,13 +257,11 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 ingre.Quantity *= rescale;
             }
             ChangeUM();
-            Console.WriteLine("Rescaled Recipe :\n");
-            
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Rescaled Recipe :\n", " "));
             DisplayRecipe();
-
         }
         public void ChangeUM()
-        { 
+        {
             string[] UM = { "teaspoon", "tablespoon", "cup" };
             foreach (Ingredient ingre in ingArray)
             {
@@ -341,36 +279,38 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     ingre.Quantity = ((int)ingre.Quantity);
                     Console.WriteLine("\nTablespoon Change=" + ingre.Quantity);
                 }
-            } 
+            }
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Rest Recipe Quantities 
         /// </summary>
-        public void RestRecipe()
+        public void ResetRecipe()
         {
             if (rescale < 0.0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "Recipe Has Not Been Rescaled!, Cannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Recipe Has Not Been Rescaled!, Cannot Reset Recipe", " "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
-                
-            }else if (numIngs == 0)
+
+            }
+            else if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe", " "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
-            Array.Copy(ingArray,RestArray,ingArray.Length);
-            
+            Array.Copy(ingArray, RestArray, ingArray.Length);
+
             /*foreach (Ingredient ingre in ingArray)
             {
                 ingre.Quantity /= rescale;
 
             }*/
-            Console.WriteLine("Original Recipe :\n");
+
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Original Recipe :\n", " "));
             DisplayRecipe();
         }
         //---------------------------------------------------------------------------------------------------------//
@@ -382,13 +322,16 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Clear Data"));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "No Recipes Found!, Cannot Clear Data", " "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
-            Console.WriteLine("Are your sure you would like to clear all recipe data?" +
-                "\n1. Yes" +
-                "\n2.Cancel and Return to Menu");
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Are your sure you would like to clear all recipe data?", " "));
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1. Yes", " "));
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "2. No", " "));
+            /* Console.WriteLine("Are your sure you would like to clear all recipe data?" +
+                 "\n1. Yes" +
+                 "\n2.Cancel and Return to Menu");*/
             int option = Convert.ToInt32(Console.ReadLine());
             if (option != 1)
             {
@@ -399,11 +342,10 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Array.Clear(ingArray, 0, ingArray.Length);
                 Array.Clear(RestArray, 0, RestArray.Length);
                 Array.Clear(steps, 0, steps.Length);
-
-                Console.WriteLine("Recipe Cleared!\n Would you like to create a new recipe?");
-                Console.WriteLine("1. Create New Recipe");
-                Console.WriteLine("2. Return to Menu");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Recipe Cleared!\n Would you like to create a new recipe?", " "));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1. Create New Recipe", " "));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "2. Return to Menu", " "));
+                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "3. Exit", " "));
 
                 option = Convert.ToInt32(Console.ReadLine());
 
@@ -427,7 +369,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         private void EndProg()
         {
-            Console.WriteLine("Enjoy Your Meal!");
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Enjoy Your Meal!", " "));
             System.Environment.Exit(0);
         }
     }

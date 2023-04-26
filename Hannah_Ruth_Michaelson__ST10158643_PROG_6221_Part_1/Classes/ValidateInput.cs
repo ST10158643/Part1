@@ -12,6 +12,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         bool valid;
         int number;
         double doubleNum;
+        // int Number { get; set; } = -1;
+        //public double DoubleNum { get => doubleNum; set => doubleNum = value
         public ValidateInput()
         {
             //remove?
@@ -23,17 +25,27 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         public bool IsStringNull(string input)
         {
 
-           
+            try
+            {
                 if (string.IsNullOrEmpty(input))
                 {
                     throw new UserException("No value has been entered");
                 }
                 else
                     valid = true;
-           
-           
+            }
+            catch (UserException e)
+            {
+                Console.WriteLine($"Message: {e.Message}");
+            }
+            catch (OutOfMemoryException)
+            {
+                Console.WriteLine("Error: Out of memory. Please reduce the number of ingredients or increase available memory.");
+
+            }
             return valid;
         }
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to take in menu string Input and ensure is a valid number 
@@ -41,26 +53,40 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         public int MenuInt(string input)
         {
 
-          
+            try
+            {
                 if (!int.TryParse(input, out int num))
                 {
-                    Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please enter a digit", " "));
+                    throw new UserException(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please enter a digit", " "));
                 }
 
                 if (num <= 0 || num >= 7)
                 {
-                    Console.WriteLine("Please enter a num that is an option");
+                    throw new UserException("Please enter a num that is an option");
                 }
                 return this.number = num;
-            
-           
+            }
+            catch (UserException e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.ResetColor();
+            }
+            catch (OutOfMemoryException)
+            {
+                Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Sir please input a smaller number", " "));
+
+            }
+            return this.number;
         }
+        //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to take in array size string Input and ensure is a valid number 
         /// </summary>
         public int ArrayNum(string input)
         {
-            
+            try
+            {
                 if (int.TryParse(input, out int num))
                 {
                     if ((Convert.ToInt32(input) > 1))
@@ -69,12 +95,22 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                         return this.number;
                     }
                     else
-                        Console.WriteLine($"Input '{input}' is not a valid number.");
+                        throw new UserException($"Input '{input}' is not a valid number.");
                 }
                 else
                     this.number = FindNumber(input);
-            
-            
+            }
+            catch (UserException e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.ResetColor();
+            }
+            catch (OutOfMemoryException)
+            {
+                Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please reduce the number of ingredients", " "));
+
+            }
             return number;
         }
         //---------------------------------------------------------------------------------------------------------//
@@ -86,59 +122,83 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             string input = str.ToLower();
 
             Dictionary<string, int> numberWords = new Dictionary<string, int>()
-            {
-                    {"zero", 0},
-                    {"one", 1},
-                    {"two", 2},
-                    {"three", 3},
-                    {"four", 4},
-                    {"five", 5},
-                    {"six", 6},
-                    {"seven", 7},
-                    {"eight", 8},
-                    {"nine", 9},
-                    {"ten", 10},
-            };
+        {
+                {"zero", 0},
+                {"one", 1},
+                {"two", 2},
+                {"three", 3},
+                {"four", 4},
+                {"five", 5},
+                {"six", 6},
+                {"seven", 7},
+                {"eight", 8},
+                {"nine", 9},
+                {"ten", 10},
+        };
 
+            try
+            {
                 if (!numberWords.TryGetValue(input, out int num))
                 {
-                    Console.WriteLine($"Input '{str}' is not a valid number word.");
+                    throw new UserException($"Input '{str}' is not a valid number word.");
                 }
                 else
                     this.number = numberWords[input];
-            
+            }
+            catch (UserException e)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.ResetColor();
+
+            }
             return this.number;
         }
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Retrieve String Input and Validate that is Double 
         /// </summary>
         public double ReceiveDouble(string input)
         {
-            
+            try
+            {
                 if (!double.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out double num))
                 {
-                    Console.WriteLine("Please enter a number");
+                    throw new UserException("Please enter a number");
                 }
 
                 if (num <= 0.0)
                 {
-                    Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please enter a number greater that 0.0!!", " "));
+                    throw new UserException(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please enter a number greater that 0.0!!", " "));
                 }
                 return this.doubleNum = num;
-            
-           
-        }
-    
-    public class UserException : Exception
-        {
-            public UserException(string message) : base(message)
+            }
+            catch (UserException e)
             {
 
-            }
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.Message);
+                Console.ResetColor();
 
+            }
+            catch (OutOfMemoryException)
+            {
+                Console.WriteLine(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please input a smaller number", " "));
+
+            }
+            return this.doubleNum;
         }
     }
-}
+    public class UserException : Exception
+    {
+        public UserException(string message) : base(message)
+        {
 
-        
+        }
+
+    }
+}
+//__---____---____---____---____---____---____---__.ooo END OF FILE ooo.__---____---____---____---____---____---____---__\\
+
