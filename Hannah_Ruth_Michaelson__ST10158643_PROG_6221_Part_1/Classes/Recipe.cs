@@ -43,7 +43,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to Dispay Menu
+        /// Method to Display Menu
         /// </summary>
         public void DisplayMenu() 
         {
@@ -70,7 +70,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                             break;
                         case 2:
                             DisplayRecipe();
-                            // DisplayRecipe(ingArray,numIngs);
+                            // DisplayRecipe(ingArray,num);
                             break;
                         case 3:
                             RescaleRecipe();
@@ -89,8 +89,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 catch (FormatException)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine($"The number entered is not valid.");
-                    Console.WriteLine($"Please enter a number from 1 to 6.");
+                    Console.WriteLine($"The num entered is not valid.");
+                    Console.WriteLine($"Please enter a num from 1 to 6.");
                     validOption = false;
                     Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -114,6 +114,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         private void RetrieveRecipeData()
         {
+            int numm,number;
 
             int numSteps = 0;
             do
@@ -122,11 +123,28 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 {
                     Console.WriteLine("\nPlease Enter Number of Ingredient's ");
 
-                    numIngs = Convert.ToInt32(Console.ReadLine());
-                    if (numIngs < 1)
-                    {
-                        throw new FormatException();
-                    }
+                    var input = Convert.ToString(Console.ReadLine());
+                    if (int.TryParse(input, out numm))
+                        {
+                            Console.WriteLine("The input is a number.");
+                            this.numIngs = numm;
+                        
+                        }   
+                        else
+                        {
+                            number = FindNumber(input);
+                            Console.WriteLine(number);
+                            if (number < 1)// if (number == 1)
+                            {
+                                Console.WriteLine("Invalid input: please enter a number.");
+                                throw new FormatException();
+                            }
+                            else
+                            {
+                                this.numIngs = number;
+                            }
+                    }      
+                   
                 }
                 catch (FormatException)
                 {
@@ -136,23 +154,26 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 }
             } while (numIngs < 1);
             ingArray = new Ingredient[numIngs];
+            RestArray = new Ingredient[numIngs];
 
             for (int i = 0; i < numIngs; i++)
             {
                 var ing = new Ingredient();
                 Console.WriteLine("Please enter name of ingredient");
                 ing.Name = Console.ReadLine();
+                //if name is not string 
                 Console.WriteLine("Please enter the unit of measurement");
-                ing.UnitofM = Console.ReadLine();
+                ing.UnitofM = Console.ReadLine().ToLower();
                 do
                 {
                     try
                     {
                         Console.WriteLine("Please enter the quantity");
                         ing.Quantity = Convert.ToDouble(Console.ReadLine());
-                        if (ing.Quantity < 1)
+                        if (ing.Quantity < 0.01 )
                         {
-                            throw new FormatException("");
+                            Console.WriteLine("frent");
+                            // throw new FormatException("");
                         }
                         else
                             ingArray[i] = ing;
@@ -161,12 +182,19 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     {
                         Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Please Enter Valid Number");
+                        Console.WriteLine("frent");
                         Console.ForegroundColor = ConsoleColor.Yellow;
                     }
-                } while (ing.Quantity < 1);
+                } while (ing.Quantity < 0.01);
             }
-            RestArray.Equals(ingArray);
-            do
+             Array.Copy(ingArray, RestArray, ingArray.Length);
+            /* for (int i = 0; i < ingArray.Length; i++)
+            { 
+                RestArray[i] = ingArray[i];
+            }*/
+
+
+                do
             {
                 try
                 {
@@ -180,7 +208,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 catch (FormatException)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed; 
-                    Console.WriteLine("Please enter a valid number.");
+                    Console.WriteLine("Please enter a valid num.");
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
             } while (numSteps <= 0);
@@ -194,6 +222,34 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
             DisplayMenu();
         }
+        private int FindNumber(string input)
+        {
+            int number = -1;
+
+                Dictionary<string, int> numberWords = new Dictionary<string, int>()
+                {
+                    {"zero", 0},
+                    {"one", 1},
+                    {"two", 2},
+                    {"three", 3},
+                    {"four", 4},
+                    {"five", 5},
+                    {"six", 6},
+                    {"seven", 7},
+                    {"eight", 8},
+                    {"nine", 9},
+                    {"ten", 10},
+                    // Add more entries for other numbers as needed
+                };
+                if (numberWords.ContainsKey(input.ToLower()))
+                return numberWords[input.ToLower()];
+                else return number;
+                
+               /* else
+                {
+                    throw new ArgumentException("Input is not a valid number word.");
+                }*/
+            }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Display Recipe
@@ -205,7 +261,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!\nCannot Dispay a Recipe"));
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Dispay a Recipe"));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
@@ -223,43 +279,17 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
             DisplayMenu();
         }
-        /*  public void DisplayRecipe(Ingredient[] a, int loop)
-          {
-              int stepCount = 0;
-              Console.Write("Ingredients:\n");
-              for (int i = 0; i < loop; i++)
-              {
-                  ingArray[i].DisplayIngredients();
-              }
-              Console.Write("Directions For loop :\n");
-              for (int i = 0; i < steps.Length; i++)
-              {
-                  Console.WriteLine("Step " + (i + 1) + "\n" + steps[i]);
-              }
-              Console.Write("Ingredients:\n");
-              foreach (Ingredient ingre in ingArray)
-              {
-                  ingre.DisplayIngredients();
-              }
-              Console.Write("Directions ForEach:\n");
-              foreach ( string step in steps)
-              {  
-                 stepCount++;
-                  Console.WriteLine("Step "+stepCount+"\n"+step);  
-              }
-
-              DisplayMenu();
-          }*/
+        
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to Rescale Recipe Quantites 
+        /// Method to Rescale Recipe Quantities 
         /// </summary>
         private void RescaleRecipe()
         {
             if (numIngs== 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!\nCannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe"));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
@@ -311,27 +341,25 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     ingre.Quantity = ((int)ingre.Quantity);
                     Console.WriteLine("\nTablespoon Change=" + ingre.Quantity);
                 }
-
-            }
-
+            } 
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to Rest Recipe Quantites 
+        /// Method to Rest Recipe Quantities 
         /// </summary>
         public void RestRecipe()
         {
             if (rescale < 0.0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "Recipe Has Not Been Rescaled!\nCannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "Recipe Has Not Been Rescaled!, Cannot Reset Recipe"));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
                 
             }else if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!\nCannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe"));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
@@ -354,12 +382,12 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             if (numIngs == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Reset Recipe"));
+                Console.WriteLine(String.Format("{0,-40} {1,-10}", " ", "No Recipes Found!, Cannot Clear Data"));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 DisplayMenu();
             }
-            Console.WriteLine("Are your sure you would like to clear all recipe data?/n" +
-                "1. Yes" +
+            Console.WriteLine("Are your sure you would like to clear all recipe data?" +
+                "\n1. Yes" +
                 "\n2.Cancel and Return to Menu");
             int option = Convert.ToInt32(Console.ReadLine());
             if (option != 1)
