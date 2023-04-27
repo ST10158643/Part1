@@ -117,33 +117,56 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Method to find inputted strings int value 
         /// </summary>
-        private int FindNumber(string str)
+
+        private static int FindNumber(string str)
         {
             string input = str.ToLower();
+            long longNum = 0;
+            long total = 0L;
+            List<int> numbers = new List<int>();
+            string[] words = str.Split(' ');
+            int multiplier = 1;
 
-            Dictionary<string, int> numberWords = new Dictionary<string, int>()
-        {
-                {"zero", 0},
-                {"one", 1},
-                {"two", 2},
-                {"three", 3},
-                {"four", 4},
-                {"five", 5},
-                {"six", 6},
-                {"seven", 7},
-                {"eight", 8},
-                {"nine", 9},
-                {"ten", 10},
-        };
-
+            Dictionary<string, long> numberConvert = new Dictionary<string, long>
+            {
+            {"zero",0},{"one",1},{"two",2},{"three",3},{"four",4},{"five",5},{"six",6},
+            {"seven",7},{"eight",8},{"nine",9},{"ten",10},{"eleven",11},{"twelve",12},
+            {"thirteen",13},{"fourteen",14},{"fifteen",15},{"sixteen",16},{"seventeen",17},
+            {"eighteen",18},{"nineteen",19},{"twenty",20},{"thirty",30},{"forty",40},
+            {"fifty",50},{"sixty",60},{"seventy",70},{"eighty",80},{"ninety",90},
+            {"hundred",100},{"thousand",1000},{"lakh",100000},{"million",1000000},
+            {"billion",1000000000},{"trillion",1000000000000},{"quadrillion",1000000000000000},
+            {"quintillion",1000000000000000000}
+             };
             try
             {
-                if (!numberWords.TryGetValue(input, out int num))
+                foreach (string word in words)
                 {
-                    throw new UserException($"Input '{str}' is not a valid number word.");
+                    string wordLower = word.ToLowerInvariant();
+                    if (numberConvert.ContainsKey(wordLower))
+                    {
+                        numbers.Add((int)numberConvert[wordLower]);
+                    }
                 }
-                else
-                    this.number = numberWords[input];
+                foreach (long numl in numbers)
+                {
+                    if (numl >= 1000)
+                    {
+                        total += longNum * numl;
+                        Console.WriteLine("numl >= 1000" + total.ToString() + "  +  " + total);
+                        longNum = 0;
+                    }
+                    else if (numl >= 100)
+                    {
+                        longNum *= numl;
+                        Console.WriteLine("numl >= 100" + longNum.ToString() + "  +  " + longNum); ;
+                    }
+                    else longNum += numl;
+                }
+                if (str.StartsWith("minus", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    multiplier = -1;
+                }
             }
             catch (UserException e)
             {
@@ -153,7 +176,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.ResetColor();
 
             }
-            return this.number;
+            return Convert.ToInt32((total + longNum) * multiplier);
         }
 
         //---------------------------------------------------------------------------------------------------------//
