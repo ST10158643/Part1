@@ -363,7 +363,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 {
                     //sum to change quantity from tablespoon to teaspoon
                     double x = Math.Ceiling((ingre.Quantity / 5) * 15);
-                    if(x<= 3)
+                    if(x<3)
                     {
                         ingre.UnitofM = UM[0];
                         ingre.Quantity = x;
