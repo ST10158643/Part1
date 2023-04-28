@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
-    internal class Ingredient
+    public class Ingredient
     {
-        //  private string unitofM = string.Empty;
 
         /// <summary>
         /// Holds the ingredients number 
@@ -16,7 +15,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         public int Number { get; set; } = 0;
 
         /// <summary>
-        /// Holds the Name of ingredients
+        /// Holds the name of the ingredient
         /// </summary>
         public string Name { get; set; } = string.Empty;
 
@@ -29,12 +28,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// Holds the quantity for the ingredient
         /// </summary>
         public double Quantity { get; set; } = 0.0;
-
+        // <summary>
+        /// Holds the string word quantity of the ingredients
+        /// </summary>
+        public string strQuantity { get; set; } = string.Empty;
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Default Constructor
         /// </summary>
-
         public Ingredient()
         {
 
@@ -42,12 +43,12 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to Output Ingredients
+        /// Method to Print Array Objects
         /// </summary>
         public void DisplayIngredients()
         {
-            Console.WriteLine("* " + Convert.ToString(this.Quantity) + " " + this.UnitofM + " of " + this.Name);
-
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(String.Format("\n{0,-7} {1,-7} {2,-5} {3,-5} {4,-5}", "", "-*- " + this.strQuantity, this.UnitofM, "of " + this.Name, " "));
         }
     }
-}//------------------------------------------...ooo000 END OF FILE 000ooo...--------------------------------//
+}//__---____---____---____---____---____---____---__.ooo END OF FILE ooo.__---____---____---____---____---____---____---__\\

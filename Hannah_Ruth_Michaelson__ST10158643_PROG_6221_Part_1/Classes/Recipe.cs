@@ -41,6 +41,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             Console.WriteLine("_--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_");
             Console.BackgroundColor = ConsoleColor.Black;
             //call to RecipeOptions
+            RetrieveRecipeData();
             RecipeOptions();
 
         }
@@ -56,7 +57,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             string input;
 
             //do while to ask user if they want capture a recipe until guard condition is met, input must be between 1 and 2 
-            do
+           /* do
             {
                 Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Would you like to capture a recipe ? ", " "));
                 Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1. Yes", " "));
@@ -66,7 +67,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 option = ValidateInput.MenuInt(input);
             } while (option <= 0 || option >= 3);
             if (option == 1)
-                RetrieveRecipeData();
+                RetrieveRecipeData();*/
             //do while to ask user if they want to diplay recipe until guard condition is met, input must be between 1 and 2 
             do
             {
