@@ -315,7 +315,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             {//declaring Dictionary object to convert the doubles to words
                 Dictionary<double, string> numberConvert = new Dictionary<double, string>
                 {
-                    {0.25,"a quater" },{0.5,"half a" }, {0, "zero"},{1, "one"}, {2, "two"},{3, "three"},{4, "four"},{5, "five"},{6, "six"},
+                    {0.25,"a quater" },{0.5,"half a" }, {0, "zero"},{1.5,"one and a half" },{1, "one"}, {2, "two"},{3, "three"},{4, "four"},{5, "five"},{6, "six"},
                     {7, "seven"},{8, "eight"},{9, "nine"},{10, "ten"},{11, "eleven"},{12, "twelve"},{13, "thirteen"}, {14, "fourteen"},
                     {15, "fifteen"},{16, "sixteen"},{17, "seventeen"},{18, "eighteen"},{19, "nineteen"}, {20, "twenty"}, {30, "thirty"},
                     {40, "forty"},{50, "fifty"},{60, "sixty"},{70, "seventy"},{80, "eighty"},{90, "ninety"},{100, "hundred"},{1000, "thousand"},

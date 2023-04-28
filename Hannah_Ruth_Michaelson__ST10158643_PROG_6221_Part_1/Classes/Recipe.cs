@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -207,7 +208,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                         steps[i] = input;
                 } while (!val);
             }
-            //Method call to diplay recipe options 
+            //Method call to display recipe options 
             RecipeOptions();
         }
         //---------------------------------------------------------------------------------------------------------//
@@ -247,7 +248,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.ForegroundColor = ConsoleColor.White;
                 stepCount++;
                 //// Console.WriteLine(String.Format("\n{0,-40} {1,-10}", " ", "Ingredients:\n", " "));
-                Console.WriteLine(String.Format("\n{0,-7} {1,-7} {2,-10} {3,-10}", "", "-*- " + "Step" + stepCount, ":" + step, "\n "));
+                Console.WriteLine(String.Format("\n{0,-7} {1,-7} {2,-10} {3,-10}", "", "-*- " + "Step" + stepCount, ": " + step, "\n "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
 
@@ -272,7 +273,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             }
             //output to ask user to select rescale option
             Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please Select Rescale Option", " "));
-            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1.Half Recipe", " "));
+            Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1. Half Recipe", " "));
             Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "2. Double Recipe", " "));
             Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "3. Triple Recipe", " "));
             Console.CursorLeft = 16;
@@ -318,20 +319,26 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             foreach (Ingredient ingre in ingArray)
             {
                 //if unit of measure is teaspoon and greater or equal to 3 then change unit of measure to tablespoon
-                if (ingre.UnitofM.Equals(UM[0]) || ingre.UnitofM.Equals(UM[3]) && ingre.Quantity >= 3)
+                if (ingre.UnitofM.Equals(UM[0]) || ingre.UnitofM.Equals(UM[3]))
                 {
-                    ingre.UnitofM = UM[1];
-                    //sum to change quantity from teaspoon to tablespoon
-                    ingre.Quantity = (ingre.Quantity * 5) / 15;
-                    ingre.Quantity = ((int)ingre.Quantity);
+                    if (ingre.Quantity >= 3)
+                    {
+                        ingre.UnitofM = UM[1];
+                        //sum to change quantity from teaspoon to tablespoon
+                        ingre.Quantity = Math.Floor((ingre.Quantity * 5) / 15);
+                        ingre.Quantity = ((int)ingre.Quantity);
+                    }
                 }
                 //if unit of measure is tablespoon and greater or equal to 16 then change unit of measure to cup
-                else if (ingre.UnitofM.Equals(UM[1]) || ingre.UnitofM.Equals(UM[4]) && ingre.Quantity >= 16)
+                else if (ingre.UnitofM.Equals(UM[1]) || ingre.UnitofM.Equals(UM[4]))
                 {
-                    ingre.UnitofM = UM[2];
-                    //sum to change quantity from tablespoon to cup
-                    ingre.Quantity = (ingre.Quantity * 15) / 250;
-                    ingre.Quantity = ((int)ingre.Quantity);
+                    if (ingre.Quantity >= 16)
+                    {
+                        ingre.UnitofM = UM[2];
+                        //sum to change quantity from tablespoon to cup
+                        ingre.Quantity = Math.Ceiling((ingre.Quantity * 15) / 250);
+                        ingre.Quantity = ((int)ingre.Quantity);
+                    }
 
                 }
                 // each ingredient's quantity assigned to new double string value using ValidateInput Class Method 
@@ -354,26 +361,32 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 //if unit of measure is tablespoon then change unit of measure to teaspoon
                 if (ingre.UnitofM.Equals(UM[1]) || ingre.UnitofM.Equals(UM[4]))
                 {
-                    ingre.UnitofM = UM[0];
                     //sum to change quantity from tablespoon to teaspoon
-                    ingre.Quantity = (ingre.Quantity / 15) * 15;
-                    ingre.Quantity = ((int)ingre.Quantity);
-
+                    double x = Math.Ceiling((ingre.Quantity / 5) * 15);
+                    if(x<= 3)
+                    {
+                        ingre.UnitofM = UM[0];
+                        ingre.Quantity = x;
+                    }
                 }
                 //if unit of measure is cup then change unit of measure to tablespoon
                 else if (ingre.UnitofM.Equals(UM[2]) || ingre.UnitofM.Equals(UM[5]))
                 {
-                    ingre.UnitofM = UM[1];
-                    ingre.Quantity = (ingre.Quantity / 250) * 15;
-                    ingre.Quantity = ((int)ingre.Quantity);
+                    double x = Math.Ceiling((ingre.Quantity / 250) * 15);
+                    if(x > 1)
+                    {
+                        ingre.UnitofM = UM[1];
+                        ingre.Quantity = x;
+                    }
 
                 }
-                // each ingrediemt's quantity assigned to new double string value using ValidateInput Class Method 
+                // each ingredient's quantity assigned to new double string value using ValidateInput Class Method 
                 ingre.strQuantity = ValidateInput.FindString(ingre.Quantity);
             }
             //Method call to alter the ingredient unit of measure according to number of quantity 
             PluralQuantity();
         }
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to add "S" to unit of measure of quantity is greater than one 
@@ -498,7 +511,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "Enjoy Your Meal!", " "));
             //system method to end program 
             System.Environment.Exit(0);
-            Console.ReadLine();
+            
         }
     }
 }//__---____---____---____---____---____---____---__.ooo END OF FILE ooo.__---____---____---____---____---____---____---__\\
