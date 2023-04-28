@@ -384,7 +384,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             foreach (Ingredient ingre in ingArray)
             {
                 //if quantity is greater than one add s to end unit of measure 
-                if (ingre.Quantity > 1)
+                if (ingre.Quantity > 1 && !ingre.UnitofM.EndsWith("s"))
                 {
                     ingre.UnitofM = ingre.UnitofM.Trim() + "s";
                 }
