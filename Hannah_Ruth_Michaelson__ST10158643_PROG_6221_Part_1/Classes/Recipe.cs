@@ -40,9 +40,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             Console.WriteLine(String.Format("{0,-10} {1,-10} {2,-19}", " ", "Welcome to Your Personal Digital", " "));
             Console.WriteLine("_--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_");
             Console.BackgroundColor = ConsoleColor.Black;
-            //call to RecipeOptions
+            //method call to RetrieveRecipeData
             RetrieveRecipeData();
-            RecipeOptions();
 
         }
 
@@ -55,20 +54,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //declaring variables to hold user input 
             int option;
             string input;
-
-            //do while to ask user if they want capture a recipe until guard condition is met, input must be between 1 and 2 
-           /* do
-            {
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Would you like to capture a recipe ? ", " "));
-                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "1. Yes", " "));
-                Console.WriteLine(String.Format("{0,-15} {1,-10}", " ", "2. No", " "));
-                Console.CursorLeft = 16;
-                input = Console.ReadLine();
-                option = ValidateInput.MenuInt(input);
-            } while (option <= 0 || option >= 3);
-            if (option == 1)
-                RetrieveRecipeData();*/
-            //do while to ask user if they want to diplay recipe until guard condition is met, input must be between 1 and 2 
+            //do while to ask user if they want to display recipe until guard condition is met, input must be between 1 and 2 
             do
             {
                 Console.WriteLine(String.Format("{0,-10} {1,-10} {2,-40}", " ", "Display recipe ?", " "));
@@ -221,7 +207,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                         steps[i] = input;
                 } while (!val);
             }
-
+            //Method call to diplay recipe options 
+            RecipeOptions();
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
@@ -492,7 +479,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 {
                     case 1:
                         //method call to recipeOption to create new recipe 
-                        RecipeOptions();
+                        RetrieveRecipeData();
                         break;
                     case 2:
                         //method call to end program 

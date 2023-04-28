@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -204,13 +205,17 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         public static int FindNumber(string str)
         {
-
+            // initialize long default variables 
             long longNum = 0;
             long total = 0L;
+            // Declaring string array to split input string into an array of words
             string[] words = str.Split(' ');
+            // initializing int multiplier for negative numbers
             int multiplier = 1;
+            // initializing bool variable in indicate if  string contains "and" 
             bool hasAnd = false;
 
+            // initializing string to long dictionary to map words to numeric value
             Dictionary<string, long> numberConvert = new Dictionary<string, long>
             {
                 {"zero",0},{"one",1},{"two",2},{"three",3},{"four",4},{"five",5},{"six",6},
@@ -223,42 +228,58 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 {"quintillion",1000000000000000000}
             };
 
+
             try
             {
+                // converting words array values to lower case and splitting into array 
                 words = str.ToLowerInvariant().Split(' ');
+                // initializing list to hold long numbers
                 var numbers = new List<long>();
+                //foreach loop to iterate through each word in the array
                 foreach (var word in words)
                 {
+                    //if word is found in numberConvert
                     if (numberConvert.TryGetValue(word, out var number))
                     {
+                        // if the word is "zero
                         if (number == 0)
-                        {
+                        {// bool is true
                             hasAnd = true;
                             continue;
                         }
+                        // if hasAnd bool is true
                         if (hasAnd)
-                        {
+                        {// add the found number to longNum variable
                             longNum += number;
                         }
+                        // else if hasAnd is false
                         else
-                        {
+                        {//add the found number to  numbers list
                             numbers.Add(number);
                         }
                     }
                 }
+                // foreach to iterate through each number in the numbers list
                 foreach (long numl in numbers)
                 {
+                    // if number is greater than or equal to 1000
                     if (numl >= 1000)
-                    {
+                    {// total is equal to longNum variable multiplied current number plus total
                         total += longNum * numl;
+                        //assigning longNum to 0 again
                         longNum = 0;
                     }
+                    // else if the number is greater than or equal to 100
                     else if (numl >= 100)
-                    {
+                    {// longNum is equal to longNum multiplied by the current number 
                         longNum *= numl;
                     }
-                    else longNum += numl;
+                    // else if number is less than 100
+                    else
+                        // longNum is equal to longNum plus the current  number 
+                        longNum += numl;
                 }
+                // if the string starts with "minus", set the multiplier to -1
                 if (str.StartsWith("minus", StringComparison.InvariantCultureIgnoreCase))
                 {
                     multiplier = -1;
@@ -280,17 +301,18 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to find inputted strings int value 
+        /// Method that takes in a double value  and returns a string that represents the number in words
         /// </summary>
         public static string FindString(double quantity)
-        {
+        {  //declare and initializing string to find white spaces 
             string result = "";
+            //declare and initializing for default values  
             double quotient = 0;
             double remainder = 0;
 
 
             try
-            {
+            {//declaring Dictionary object to convert the doubles to words
                 Dictionary<double, string> numberConvert = new Dictionary<double, string>
                 {
                     {0.25,"a quater" },{0.5,"half a" }, {0, "zero"},{1, "one"}, {2, "two"},{3, "three"},{4, "four"},{5, "five"},{6, "six"},
@@ -300,49 +322,64 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     {100000, "lakh"},{1000000, "million"},{1000000000, "billion"},{1000000000000, "trillion"},{1000000000000000, "quadrillion"},
                     {1000000000000000000, "quintillion"}
                 };
-
+                //if quantity is negative,"minus" is added to the return string
                 if (quantity < 0)
                 {
                     result += "minus ";
+                    // quantity is made positive
                     quantity = -quantity;
                 }
-
+                //if quantity is less the 20, then the string value is found in  "numberConvert"
                 if (quantity < 20)
                 {
                     numberConvert.TryGetValue(quantity, out result);
                 }
+                //if quantity is less than 100
                 else if (quantity < 100)
                 {
+                    //calculation to find quotient using Math Method
                     quotient = Math.Floor(quantity / 10) * 10;
+                    //calculation to find reminder 
                     remainder = quantity % 10;
+                   // the string value for for quotient is found in "numberConvert"
                     numberConvert.TryGetValue(quotient, out result);
                     if (remainder > 0)
-                    {
+                    {//if the reminder is greater than 0, assign vale to return string
                         result += " " + FindString(remainder);
                     }
                 }
+                //else if quantity is less than 1000
                 else if (quantity < 1000)
                 {
+                    //calculation to find quotient using Math Method
                     quotient = Math.Floor(quantity / 100);
+                    //calculation to find reminder
                     remainder = quantity % 100;
+                    // the string value for for quotient is found in "numberConvert" 
                     result = FindString(quotient) + " hundred";
                     if (remainder > 0)
-                    {
+                    {//if the reminder is greater than 0, assign vale to return string
                         result += " and " + FindString(remainder);
                     }
-                }
+                }///else if quantity is greater than or equal to 1000
                 else
-                {
+                {//for loop to iterate though  numberConvert dictionary from te highest to lowest value
                     for (int i = numberConvert.Count - 1; i >= 0; i--)
-                    {
-                        double divisor = numberConvert.ElementAt(i).Key;
+                    {//double divisor assigned to value found in numberConvert
+                     double divisor = numberConvert.ElementAt(i).Key;
+                        //if quantity is greater than or equal to value 
                         if (quantity >= divisor)
                         {
+                            //calculation to find quotient using Math method and passing quantity and divisor 
                             quotient = Math.Floor(quantity / divisor);
+                            //calculation to find reminder 
                             remainder = quantity % divisor;
+                            //return string assigning return string to  string value of quotient with recursive method call to FindString
+                            //and adding string value of divisor found in numberConvert
                             result = FindString(quotient) + " " + numberConvert[divisor];
+                           //if the remainder is greater that 0 
                             if (remainder > 0)
-                            {
+                            {//return result string plus string value of remainder found using recursive FindString method call 
                                 result += ", " + FindString(remainder);
                             }
                             break;
