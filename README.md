@@ -29,7 +29,7 @@ To use the application, follow these steps:
 4. Enter the steps for the recipe, one at a time.
 5. When you are finished, the application will ask if you would like to peform various operations on the recipe.If you would like to perform the presented operation enter the digit 1, if not enter 2.
 
-#References
+##References
 Manga, K. (2019) C#: How to change the cursorleft of the console, GeeksforGeeks. GeeksforGeeks. Available at: https://www.geeksforgeeks.org/c-sharp-how-to-change-the-cursorleft-of-the-console/ (Accessed: April 28, 2023). 
 Mohanty, A. (no date) How to convert WORDS TO NUMBERS IN C#, C# Corner. C# Corner. Available at: https://www.c-sharpcorner.com/blogs/convert-words-to-numbers-in-c-sharp (Accessed: April 28, 2023). 
 Tirabassi, J. (2022) Why double.tryparse("0.0000", out doublevalue) returns false ?, CopyProgramming. CopyProgramming. Available at: https://copyprogramming.com/howto/why-double-tryparse-0-0000-out-doublevalue-returns-false (Accessed: April 28, 2023). 
