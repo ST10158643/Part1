@@ -18,6 +18,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         static double doubleNum = 0.0;
         static int number = -1;
 
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Ensure String is not null 
@@ -58,7 +59,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Method to take in menu string Input and ensure is a valid number 
         /// </summary>
-        public static int MenuInt(string input)
+        public static int MenuInt(string input, int guard)
         {
 
             try
@@ -68,7 +69,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     throw new UserException(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please enter a number that is an option", " "));
                 }
                 //if input is not between 1 and 2 throw exception
-                if (num <= 0 || num >= 3)
+                if (num <= 0 || num >= guard)
                 {
                     throw new UserException(String.Format("{0,-15} {1,-10} {2,-40}", " ", "Please enter a number that is an option", " "));
                 }
@@ -95,6 +96,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         public static int ValidInt(string input)
         {
+
             //if input has not value then return default number 
             if (!IsStringNull(input))
                 //return int
