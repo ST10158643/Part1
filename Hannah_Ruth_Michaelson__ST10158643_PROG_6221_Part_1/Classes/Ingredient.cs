@@ -13,14 +13,11 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
        // public int Number { get; set; } = 0;
 
-        ///NEW VARIBLES
-
         /// <summary>
         /// Holds the calories for the ingredient
         /// </summary>
         public double Calories { get; set; } = 0.0;
-        //public double Calories { get; private set; } = 0.0;
-
+      
         // <summary>
         /// Holds the string word quantity of the ingredients
         /// </summary>
