@@ -348,17 +348,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     }
                 } while (string.IsNullOrEmpty(ing.FoodGroup));
 
-                //adding ingredient object to ingredientList
+                //add ingredient to list 
                 ingList.Add(ing);
-
-                //clear console window
-                Console.Clear();
-
-                //method call to display heading
-                Display("Add New Recipe", ConsoleColor.DarkBlue);
-               
-                ingList.Add(ing);
-
                 Console.Clear();
                 Display("Add New Recipe", ConsoleColor.DarkBlue);
                 //do while to ask user if they would like to save another ingredient, until the input not 1 or 2 
@@ -590,7 +581,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
             RecipeList[index].DisplayRecipe();
             //if index is greater than or equal to 0 and less than the number of recipes in list 
-           /* if (index >= 0 && index < RecipeList.Count)
+            if (index >= 0 && index < RecipeList.Count)
             {
                 //call to recipe DisplayRecipe() method using recipe object in recipe list 
                 RecipeList[index].DisplayRecipe();
