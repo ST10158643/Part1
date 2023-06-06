@@ -2,9 +2,10 @@
 
 ## Overview
 
-Part1 command-line application is a Console App built on the .NET framework 4.8.
-Its purpose is to enable users to input and save the ingredients and steps necessary to cook a specific recipe.
-The application was developed as a project for the PROGRAMMING 2A course POE Submission and serves 
+Part2 command-line application is a Console App built on the .NET framework 4.8.
+The Recipe Application is a user-friendly tool that allows a user to create and manage recipes.
+With this application, you can easily enter the details of your recipe, including the ingredients and steps involved. 
+The Recipe Application application was developed as a project for the PROGRAMMING 2A course POE Submission and serves 
 as a tool to facilitate the learning of cooking techniques. 
 
 ## Installation
@@ -24,10 +25,13 @@ To install the application, follow these steps:
 To use the application, follow these steps:
 
 1. Launch the application by following the installation instructions above.
-2. Enter the number of ingredients you would like to capture for a recipe.
-3. Enter the ingredients name, quantity and unit of measure, one at a time.
-4. Enter the steps for the recipe, one at a time.
-5. When you are finished, the application will ask if you would like to peform various operations on the recipe.If you would like to perform the presented operation enter the digit 1, if not enter 2.
+2. Select option 1 from the user menu to create a recipe.
+3. Enter the name of recipe you would like to capture for a recipe.
+4. Enter the ingredients name, quantity and unit of measure, one at a time.
+5. Enter the steps for the recipe, one at a time.
+6. After entering all the recipe steps, the application will return to the user menu.
+7. The useru can choose to perform other actions or exit the application.
+8. user menu provides other options, such as viewing recipes, editing recipes, and deleting recipes.
 
 ## References
 Manga, K. (2019) C#: How to change the cursorleft of the console, GeeksforGeeks. GeeksforGeeks. Available at: https://www.geeksforgeeks.org/c-sharp-how-to-change-the-cursorleft-of-the-console/ (Accessed: April 28, 2023). 
