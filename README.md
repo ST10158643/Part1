@@ -8,7 +8,7 @@ The application was developed as a project for the PROGRAMMING 2A course POE Sub
 as a tool to facilitate the learning of cooking techniques. 
 
 ## Installation
-The application is a Console App opertiiiii on .NET framework 4.8 and this can 
+The application is a Console App operating on .NET framework 4.8 and this can 
 run on Visual Studio 2019, Visual Studio 2022 and the Microsoft .NET Framework 4.8.
 
 To install the application, follow these steps:
