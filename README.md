@@ -33,6 +33,10 @@ To use the application, follow these steps:
 7. The useru can choose to perform other actions or exit the application.
 8. user menu provides other options, such as viewing recipes, editing recipes, and deleting recipes.
 
+## Review From FeedBack
+Feedback: After the user chose no on clear option , handle the exception. Code must not crush
+Modification:
+
 ## References
 Manga, K. (2019) C#: How to change the cursorleft of the console, GeeksforGeeks. GeeksforGeeks. Available at: https://www.geeksforgeeks.org/c-sharp-how-to-change-the-cursorleft-of-the-console/ (Accessed: April 28, 2023). 
 Mohanty, A. (no date) How to convert WORDS TO NUMBERS IN C#, C# Corner. C# Corner. Available at: https://www.c-sharpcorner.com/blogs/convert-words-to-numbers-in-c-sharp (Accessed: April 28, 2023). 
