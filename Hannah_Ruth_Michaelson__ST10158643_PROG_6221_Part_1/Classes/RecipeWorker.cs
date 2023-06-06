@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
@@ -24,78 +25,60 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// </summary>
         public static CalorieAlert delCal = new CalorieAlert(delObj.CheckCalories);
 
+
         /// <summary>
         ///Declaration and initialization of string List to hold food group names 
         /// </summary>
-        List<string> foodGroups = new List<string> { "Starch", "Vegetables and Fruits", "Legumes",
+        private List<string> foodGroups = new List<string> { "Starch", "Vegetables and Fruits", "Legumes",
                               "Meat, Chiken, Fish and Eggs", "Milk and Dairy", "Fats and Oils"
                                ,"Water"};
        
         /// <summary>
         /// Declaration of Global boolean variable for validation
         /// </summary>
-        bool val;
-        /// <summary>
-        /// Declaration of Global int variable for iteration of steps
-        /// </summary>
-        int iteration = 0;
-       
+        public bool val;
+              
         /// <summary>
         /// Recipe Class Object List to hold Recipes
         /// </summary>
         private List<Recipe> RecipeList = new List<Recipe>();
-        /// <summary>
-        /// Ingredient Class Object List to hold Recipe Ingredients 
-        /// </summary>
-        private List<Ingredient> IngredientList = new List<Ingredient>();
-        /// <summary>
-        /// String List to hold Recipe Steps 
-        /// </summary>
-        private List<string> Steps = new List<string>();
+     
         /// <summary>
         /// Dictionary to hold rescale values that corresponde to RecipeList Index
         /// </summary>
         Dictionary<double, Recipe> RescaleValue = new Dictionary<double, Recipe>();
 
-        //TAKE AWAY?
-
         /// <summary>
         /// Declaration of variable store the rescale factor
         /// </summary>
         double rescale = 0.0;
-
-        /// <summary>
-        /// Declaration of variable to store the user input option
-        /// </summary>
-        int inputOption;
-
+            
         /// <summary>
         /// Declaration of variable to store the recipe name
         /// </summary>
         string rName;
 
-        /// <summary>
-        /// Property to get or set the Ingredient object.
-        /// </summary>
-        //  public object Ing { get => ing; set => ing = (Ingredient)value; }
-        /// <summary>
-        ///  Declaration and instantiation of an Ingredient Class object 
-        /// </summary>
-        // private Ingredient ing = new Ingredient();
-
-
-        //---------------------------------------------------------------------------------------------------------//
+         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Default Constructor
         /// </summary>
         public RecipeWorker()
+        {
+            
+
+        }
+
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to set console window and start program run 
+        /// </summary>
+        public void StartProg()
         {
             //setting console window width
             Console.WindowWidth = 100;
             Display("Welcome to Your Digital Cookbook", ConsoleColor.DarkYellow);
             //method call to RetrieveRecipeData
             RecipeOptions();
-
 
         }
         //---------------------------------------------------------------------------------------------------------//
@@ -121,7 +104,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //Initialization of string using to format and calculate the padding dynamically
             cenHead = string.Format("{0," + ((Console.WindowWidth + text.Length) / 2).ToString() + "}{1,45}", text, "");
 
-            // Initialization of string to display heading 
+            //Initialization of string to display heading 
             head = $"{separator}\n{cenHead}\n{separator}";
 
             // Display the heading
@@ -139,13 +122,17 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         {
             // Declaring variables to hold user input
             int option; 
-            string input; 
+            string input;
 
             //if the Recipe name is not empty 
             if (!string.IsNullOrEmpty(rName))
+            {
+                Console.WriteLine("Press any key to return to menu");
+                Console.ReadKey();
+                Console.Clear();
                 Display("App Menu", ConsoleColor.DarkBlue);
-
-            // Menu options
+            }
+            // Declaring and initialising List to hold Menu options
             List<string> menuOptions = new List<string> { "Create New Recipe", "Display Recipes", "Rescale Recipes", "Reset Recipes", "Clear Recipes", "Exit Program" };
        
             //forloop to iterate through each menu option 
@@ -163,6 +150,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 option = ValidateInput.MenuInt(input, menuOptions.Count + 1);
             } while (option <= 0 || option > menuOptions.Count);
 
+            //Switch statement to call method relevent to user input 
             switch (option)
             {
                 case 1:
@@ -184,17 +172,22 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     EndProg(); // method call to end the program
                     break;
             }
-            Console.WriteLine();
-
+            
             Console.ReadLine();
         }
 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to retrieve user input
+        ///  Method to Retreive User Recipe Input 
         /// </summary>
         private void RetrieveRecipeData()
         {
+            //Declaring double to hold recipe calories
+            double recipeCal;
+            //Declaring and initialising Ingredient List 
+            List<Ingredient> IngredientList = new List<Ingredient>();
+            //Declaring and initialising string Step List 
+            List<string> Steps = new List<string>();
             //Clear console 
             Console.Clear();
             //method call to display heading 
@@ -212,33 +205,32 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     rName = input;
 
             } while (!val);
-            //Call to class method to get ingredient data 
-            GetIngredients();
-            // Method call to alter the ingredient unit of measure according to the quantity
-            PluralQuantity();
-            //Call to class method to get recipe step data 
-            GetRecipeSteps();
+            //Populating List through method call to get ingredient data 
+             IngredientList = GetIngredients();
+            //assigning value of recipe Calories double to Calculate Calries return method 
+             recipeCal = CalculateCalories(IngredientList);
+            //Method call to alter the ingredient unit of measure according to the quantity
+            PluralQuantity(IngredientList);
+            
+            //Populating Step list through method call to get steps data 
+            Steps = GetRecipeSteps();
+
+            // Declaration and instantiation Recipe object using the para constructor
+            Recipe recipe = new Recipe(rName, IngredientList, Steps, recipeCal);
+            // add recipe object to RecipeList 
+            RecipeList.Add(recipe);
             //clear console window 
             Console.Clear();
             // Output indicating that the recipe is saved
             Display("Recipe Saved !", ConsoleColor.Black);
-            // Delay for 1 second
-            Task.Delay(1000).Wait();
-            //clear console window 
-            Console.Clear();
-
-            // Declaration and instantiation Recipe object using the para constructor
-            Recipe recipe = new Recipe(rName, IngredientList, Steps);
-            // add recipe object to RecipeList 
-            RecipeList.Add(recipe);
-            //chnage foreground to red 
+            //change foreground to red 
             Console.ForegroundColor = ConsoleColor.DarkRed;
-
-            // Call the delCal delegate to display a calorie alert message
-            Console.WriteLine(delCal.Invoke());
-            Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "ERRRRRRRRRR", " "));
-
-            //chnage foreground to yellow 
+            //Call the delCal delegate to display a calorie alert message
+            Console.WriteLine("\n"+delCal(recipeCal));
+            // Delay for 2 second
+            Task.Delay(2000).Wait();
+            Console.Clear();
+            //change foreground to yellow 
             Console.ForegroundColor = ConsoleColor.Yellow;
             // Method call to display recipe options
             RecipeOptions();
@@ -247,150 +239,170 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Method to Retreive Ingreidient Data
         /// </summary>
-        private void GetIngredients()
+        private List< Ingredient> GetIngredients()
         {
             //Declaring variables 
-            string userInput;
-            // Create a new instance of Ingredient for each ingredient
+            string input;
+            int inputOption;
+            //Declaring instance of Ingredient for each ingredient
             Ingredient ing;
-            //do while to ask user to enter ingredient until input bool returns true
-            do
-            {
-                // Instantiate a new Ingredient object
-                ing = new Ingredient();
-                Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please the ingredient's name", " "));
-                Console.CursorLeft = 12;
-                string input = Console.ReadLine();
-                //passing input to ValidateIput Class method to ensure is valid 
-                val = ValidateInput.IsStringNull(input);
-                if (val)
-                    ing.Name = input;
+            //Declaring and initialising Ingredient List 
+            List<Ingredient> ingList = new List<Ingredient>();
 
-            } while (!val);
-            //do while to ask user to enter unit of measure until input bool returns true
+            //do while to ask user to enter ingredient data till option selected is not 1/ yes 
             do
-            {
-                Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please enter the unit of measurement", " "));
-                Console.CursorLeft = 12;
-                string input = Console.ReadLine().ToLower();
-                //passing input to ValidateIput Class method to ensure is valid 
-                val = ValidateInput.IsStringNull(input);
-                if (val)
-                    ing.UnitofM = input;
-
-            } while (!val);
-            //do while to ask user to enter number of quantity until input is greater than 0.0 or not 0 
-            do
-            {
-                Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please enter the quantity", " "));
-                Console.CursorLeft = 12;
-                string input = Console.ReadLine();
-                //passing input to ValidateIput Class method to ensure is valid 
-                ing.Quantity = ValidateInput.ValidDouble(input);
-                //if quantity is greater that 0.0 
-                if (ing.Quantity > 0.0)
-                    // assign ingredient string quantity variable to ValidateInput Class method that returns string 
-                    ing.strQuantity = ValidateInput.FindString(ing.Quantity);
-            } while (ing.Quantity < 0.0 || ing.Quantity == 0);
-            //do while to ask user to enter number of calories until input is greater than 0.0 or not 0
-            do
-            {
-                Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please enter ingredient calories", " "));
-                Console.CursorLeft = 12;
-                string input = Console.ReadLine();
-                //passing input to ValidateIput Class method to ensure is valid 
-                ing.Calories = ValidateInput.ValidDouble(input);
-                //if quantity is greater that 0.0 
-                if (ing.Calories > 0.0)
-                    // assign ingredient string calorie variable to ValidateInput Class method that returns string 
-                    ing.strCalories = ValidateInput.FindString(ing.Calories);
-            } while (ing.Calories < 0.0 || ing.Calories == 0);
-            //do while to ask user to enter number of food group until input is within selection range 
-            do
-            {
-                Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please select ingredient food grouping", " "));
-                Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "1. Starch", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. Vegetables and Fruits ", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "3. Legumes ", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "4. Meat, Chiken, Fish and Eggss ", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "5. Milk and Dairy ", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "6. Fats and Oils ", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "7. Water ", " "));
-                Console.CursorLeft = 12;
-                string input = Console.ReadLine();
-                int inputNum = ValidateInput.MenuInt(input, foodGroups.Count + 1);
-                switch (inputNum)
+            {  //do while to ask user to enter ingredient until input bool returns true
+                do
                 {
+                    // Instantiate a new Ingredient object
+                    ing = new Ingredient();
+                    //Input prompt 
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please the ingredient's name", " "));
+                    Console.CursorLeft = 12;
+                    input = Console.ReadLine();
+                    //passing input to ValidateIput Class method to ensure is valid 
+                    val = ValidateInput.IsStringNull(input);
+                    if (val)
+                        //assiging ingredient name to input 
+                        ing.Name = input;
 
-                    case 1:
-                        ing.FoodGroup = foodGroups[0];
-                        break;
-                    case 2:
-                        ing.FoodGroup = foodGroups[1];
-                        break;
-                    case 3:
-                        ing.FoodGroup = foodGroups[2];
-                        break;
-                    case 4:
-                        ing.FoodGroup = foodGroups[3];
-                        break;
-                    case 5:
-                        ing.FoodGroup = foodGroups[4];
-                        break;
-                    case 6:
-                        ing.FoodGroup = foodGroups[5];
-                        break;
-                    case 7:
-                        ing.FoodGroup = foodGroups[6];
-                        break;
-                }
-            } while (string.IsNullOrEmpty(ing.FoodGroup));
-            //adding ingredient object to ingredientList
-            IngredientList.Add(ing);           
+                } while (!val);
+                //do while to ask user to enter unit of measure until input bool returns true
+                do
+                {
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please enter the unit of measurement", " "));
+                    Console.CursorLeft = 12;
+                    input = Console.ReadLine().ToLower();
+                    //passing input to ValidateIput Class method to ensure is valid 
+                    val = ValidateInput.IsStringNull(input);
+                    if (val)
+                        //assiging ingredient UM to input 
+                        ing.UnitofM = input;
 
-            //clear console window
-            Console.Clear();
+                } while (!val);
+                //do while to ask user to enter number of quantity until input is greater than 0.0 or not 0 
+                do
+                {
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please enter the quantity", " "));
+                    Console.CursorLeft = 12;
+                    input = Console.ReadLine();
+                    //passing input to ValidateIput Class method to ensure is valid 
+                    ing.Quantity = ValidateInput.ValidDouble(input);
+                    //if quantity is greater that 0.0 
+                    if (ing.Quantity > 0.0)
+                        // assign ingredient string quantity variable to ValidateInput Class method that returns string 
+                        ing.strQuantity = ValidateInput.FindString(ing.Quantity);
+                } while (ing.Quantity < 0.0 || ing.Quantity == 0);
+                //do while to ask user to enter number of calories until input is greater than 0.0 or not 0
+                do
+                {
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please enter ingredient calories", " "));
+                    Console.CursorLeft = 12;
+                    input = Console.ReadLine();
+                    //passing input to ValidateIput Class method to ensure is valid 
+                    ing.Calories = ValidateInput.ValidDouble(input);
+                    //if quantity is greater that 0.0 
+                    if (ing.Calories > 0.0)
+                        // assign ingredient string calorie variable to ValidateInput Class method that returns string 
+                        ing.strCalories = ValidateInput.FindString(ing.Calories);
+                } while (ing.Calories < 0.0 || ing.Calories == 0);
+                //do while to ask user to enter number of food group until ingredient food group is assigned 
+                do
+                {
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please select ingredient food grouping", " "));
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "1. Starch", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. Vegetables and Fruits ", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "3. Legumes ", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "4. Meat, Chiken, Fish and Eggss ", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "5. Milk and Dairy ", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "6. Fats and Oils ", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "7. Water ", " "));
+                    Console.CursorLeft = 12;
+                    input = Console.ReadLine();
+                    int inputNum = ValidateInput.MenuInt(input, foodGroups.Count + 1);
+                    //switch statement to assign ingredient foodgroup to user according to user selection 
+                    switch (inputNum)
+                    {
 
-            //method call to display heading
-            Display("Add New Recipe", ConsoleColor.DarkBlue);
-            //do while to ask user if they would like to save another ingredient 
-            do
-            {
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Would you like to add another ingredient?", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "1. Yes", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. No", " "));
-                Console.CursorLeft = 12;
-                userInput = Console.ReadLine();
-                //intialing inputOption by passing userInput to ValidateInput Class method to ensure is valid 
-                inputOption = ValidateInput.MenuInt(userInput, 3);
-            } while (inputOption <= 0 || inputOption > 2);
-            
-            //clear console window
-            Console.Clear();
-            // method call to display heading
-            Display("Add New Recipe", ConsoleColor.DarkBlue);
-            //if inputOption is yes
-            if (inputOption == 1)
-            //recursive method call 
-               GetIngredients();
-            
+                        case 1:
+                            ing.FoodGroup = foodGroups[0];
+                            break;
+                        case 2:
+                            ing.FoodGroup = foodGroups[1];
+                            break;
+                        case 3:
+                            ing.FoodGroup = foodGroups[2];
+                            break;
+                        case 4:
+                            ing.FoodGroup = foodGroups[3];
+                            break;
+                        case 5:
+                            ing.FoodGroup = foodGroups[4];
+                            break;
+                        case 6:
+                            ing.FoodGroup = foodGroups[5];
+                            break;
+                        case 7:
+                            ing.FoodGroup = foodGroups[6];
+                            break;
+                    }
+                } while (string.IsNullOrEmpty(ing.FoodGroup));
+
+                //adding ingredient object to ingredientList
+                ingList.Add(ing);
+
+                //clear console window
+                Console.Clear();
+
+                //method call to display heading
+                Display("Add New Recipe", ConsoleColor.DarkBlue);
+               
+                ingList.Add(ing);
+
+                Console.Clear();
+                Display("Add New Recipe", ConsoleColor.DarkBlue);
+                //do while to ask user if they would like to save another ingredient, until the input not 1 or 2 
+                do
+                {
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Would you like to add another ingredient?", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "1. Yes", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. No", " "));
+                    Console.CursorLeft = 12;
+                    input = Console.ReadLine();
+                    inputOption = ValidateInput.MenuInt(input, 3);
+
+                } while (inputOption != 1 && inputOption != 2);
+
+            } while (inputOption == 1);
+            //return Ingredient List 
+            return ingList;
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Retreive Recipe Steps Data
         /// </summary>
-        private void GetRecipeSteps()
+        private List<string> GetRecipeSteps()
         {
             //Declaring and initialzing variables 
             string userInput;
-            inputOption = 0;
-            
-                iteration++;
+            int inputOption;
+            int iteration = 0;
+            // Declaring and initialising string Step List
+            List<string> Steps = new List<string>();
+
+            //incrementing int 
+            iteration++;
+            //clear console
+            Console.Clear();
+            //method call to display heading 
+            Display("Add New Recipe", ConsoleColor.DarkBlue);
+            //do while to ask user to enter steps until input is not equal to 1/yes
+            do
+            {
                 //do while to ask user to enter steps until bool returns true
                 do
                 {
-
-                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please Enter Recipe Step " +iteration+ " Description", " "));
+                    Console.WriteLine(String.Format("\n{0,-10} {1,-10}", " ", "Please Enter Recipe Step " + iteration + " Description", " "));
                     Console.CursorLeft = 12;
                     string input = Console.ReadLine();
                     //passing input to ValidateIput Class method to ensure is valid 
@@ -399,26 +411,43 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     if (val)
                         Steps.Add(input);
                 } while (!val);
-            //do while to ask user if they would like to save another step
-            do
-            { 
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Would you like to add another step?", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "1. Yes", " "));
-                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. No", " "));
-                Console.CursorLeft = 12;
-                userInput = Console.ReadLine();
-                //intialing inputOption by passing userInput to ValidateInput Class method to ensure is valid 
-                inputOption = ValidateInput.MenuInt(userInput, 3);
-            } while (inputOption <= 0 || inputOption > 2);
-            //if inputOption is yes
-            if (inputOption == 1)
-                //recursive method call 
-                GetRecipeSteps();
+                //do while to ask user if they would like to save another ingredient, until the input not 1 or 2 
+                do
+                {
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Would you like to add another step?", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "1. Yes", " "));
+                    Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. No", " "));
+                    Console.CursorLeft = 12;
+                    userInput = Console.ReadLine();
+                    //intialing inputOption by passing userInput to ValidateInput Class method to ensure is valid 
+                    inputOption = ValidateInput.MenuInt(userInput, 3);
+                    
+                } while (inputOption != 1 && inputOption != 2);
 
+            } while (inputOption == 1);
+           //return Step List 
+            return Steps;
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to clear recipe data 
+        /// Method to Calculte the Total Recipe Calories, passing Ingredient List 
+        /// </summary>
+        public double CalculateCalories(List<Ingredient> ingredients)
+        {
+            //Declare and instiating Int variable
+            double kCal = 0;
+            // foreach loop to iterate through each ingredient's calories within the ingredients list
+            foreach (Ingredient ing in ingredients)
+            {
+                // calorie variable is assigned to, calories plus the current ingredient's calorie value
+                kCal += ing.Calories;
+            }
+            // return the total calories
+            return kCal;
+        }
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Method to Clear Recipe Data
         /// </summary>
         private void ClearData()
         {
@@ -446,17 +475,18 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please select the recipe you would like to clear", " "));
             //do while to prompt the user to select a recipe to clear
             do
-            {               
-              //for loop to iterate through each recipe name within recipelist 
+            {
+                //for loop to iterate through each recipe name within recipelist 
                 for (int i = 0; i < RecipeList.Count; i++)
                 {
+
                     Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", (i + 1) + "." + RecipeList[i].Name));
                 }
                 Console.CursorLeft = 12;
                 //initialization of varibales 
                 input = Console.ReadLine();
                 index = int.Parse(input) - 1;
-            } while (index<= 0 || index > RecipeList.Count-1);
+            } while (index < 0 || index >= RecipeList.Count);
 
             //do while to ensure user wants to clear data 
             do
@@ -510,11 +540,10 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     EndProg();
                     break;
             }
-        }
-    
+        }    
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to close program
+        /// Method to Close Program 
         /// </summary>
         private void EndProg()
         {//method to clear console window 
@@ -524,11 +553,10 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to display recipe
+        /// Method to Dislay Recipe
         /// </summary>
         private void DisplayRecipe()
         {
-
             //Declaring variables
             string input;
             int index;
@@ -540,9 +568,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "No Recipes Found!, Cannot Display a Recipe", " "));
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 //method call to menu 
-                RecipeOptions();
-            }
-            https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=net-7.0
+                 RecipeOptions();
+            }            
             //Sort RecipeList based on the Name property of each Recipe object in ascending order
             RecipeList.Sort((recipe1, recipe2) => string.Compare(recipe1.Name, recipe2.Name));
             Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please select the recipe you would like to view", " "));
@@ -561,20 +588,20 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 index = int.Parse(input) -1;
             } while (index < 0 || index >= RecipeList.Count);
 
-
+            RecipeList[index].DisplayRecipe();
             //if index is greater than or equal to 0 and less than the number of recipes in list 
-            if (index >= 0 && index < RecipeList.Count)
+           /* if (index >= 0 && index < RecipeList.Count)
             {
                 //call to recipe DisplayRecipe() method using recipe object in recipe list 
                 RecipeList[index].DisplayRecipe();
                 
-            }
+            }*/
             //method call to menu 
-            RecipeOptions();
+             RecipeOptions();
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to rescale recipe quantities 
+        /// Method to Rescale Recipe Quantities 
         /// </summary>
         private void RescaleRecipe()
         {
@@ -601,7 +628,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please select the recipe you would like to rescale", " "));
             //do while to prompt the user to select a recipe to Rescale
             do
-            { 
+            {
                 //for loop to iterate through each recipe name within recipelist 
                 for (int i = 0; i < RecipeList.Count; i++)
                 {
@@ -612,7 +639,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 //initialization of varibales 
                 input = Console.ReadLine();
                 index = int.Parse(input) - 1;
-            } while (index <= 0 || index > RecipeList.Count - 1);
+            } while (index < 0 || index >= RecipeList.Count);
 
             //output to ask user to select rescale option
             Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please Select Rescale Option", " "));
@@ -649,11 +676,10 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         } 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to rest recipe quantities 
+        /// Method to Rest Recipe Quantities 
         /// </summary>
         private void ResetRecipe()
         {
-
             //Declaring variables
             string input;
             int index;
@@ -661,8 +687,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //clear console window 
             Console.Clear();
             //method call to display heading
-            Console.Clear();
-            Display("Reset Recipe", ConsoleColor.DarkBlue);
+             Display("Reset Recipe", ConsoleColor.DarkBlue);
                        
             //if number of ingredients stored is 0 display error message 
             if (RecipeList.Count == 0)
@@ -679,6 +704,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //do while to prompt the user to select a recipe to reset
             do
             {
+                //for loop to iterate through each recipe name within recipelist 
                 for (int i = 0; i < RecipeList.Count; i++)
                 {
 
@@ -688,12 +714,12 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 //initialization of varibales 
                 input = Console.ReadLine();
                 index = int.Parse(input) - 1;
-            } while (index <= 0 || index > RecipeList.Count - 1);
+            } while (index < 0 || index >= RecipeList.Count);
 
             //if index is greater than or equal to 0 and less than the number of recipes in list 
             if (index >= 0 && index < RecipeList.Count)
             {
-                https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.keyvaluepair-2?view=net-7.0
+                
                 //foreach loop to iterate through each element of dictionary 
                 foreach (KeyValuePair<double, Recipe> pair in RescaleValue)
                 {
@@ -709,7 +735,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                          Console.ForegroundColor = ConsoleColor.DarkRed;
                          Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Recipe Has Not Been Rescaled!, Cannot Reset Recipe", " "));
                          Console.ForegroundColor = ConsoleColor.Yellow;
-                        //method call to menu  
+                        //method call to menu
                         RecipeOptions();
                     }
                 }
@@ -723,7 +749,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Method to add "S" to unit of measure of quantity is greater than one 
         /// </summary>
-        private void PluralQuantity()
+        private void PluralQuantity(List<Ingredient> IngredientList)
         {
             //foreach loop to iterate through each ingredient 
             foreach (Ingredient ingre in IngredientList)

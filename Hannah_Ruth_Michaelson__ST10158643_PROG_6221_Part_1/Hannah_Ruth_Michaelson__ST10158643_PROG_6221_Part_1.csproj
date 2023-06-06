@@ -44,9 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Recipe.cs" />
     <Compile Include="Classes\ValidateInput.cs" />
     <Compile Include="Classes\Ingredient.cs" />
-    <Compile Include="Classes\Recipe.cs" />
+    <Compile Include="Classes\RecipeWorker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

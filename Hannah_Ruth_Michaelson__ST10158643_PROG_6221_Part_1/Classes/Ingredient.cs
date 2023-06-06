@@ -8,11 +8,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
     public class Ingredient
     {
-        /// <summary>
-        /// Holds the ingredients number 
-        /// </summary>
-       // public int Number { get; set; } = 0;
-
+        
         /// <summary>
         /// Holds the calories for the ingredient
         /// </summary>
@@ -57,7 +53,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
 
         }
-     
+        //---------------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// Unit Test Overload Constructor
+        /// </summary>
+        public Ingredient(double cal)
+        {
+            this.Calories = cal;
+        }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Print Array Objects
@@ -65,8 +68,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         public void DisplayIngredients(int i)
         {
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine($"\n{i.ToString().PadLeft(10)}.  {this.strQuantity.ToUpper()}{this.UnitofM} of {this.Name}");
-            Console.WriteLine($"\n{"".PadLeft(15)}[Calories: {this.Calories}][Food Group: {this.FoodGroup}]");
+            Console.WriteLine($"\n{i.ToString().PadLeft(12)}.  {this.strQuantity} {this.UnitofM} of {this.Name}");
+            Console.WriteLine($"\n{"".PadLeft(20)}[Calories: {this.Calories}] [Food Group: {this.FoodGroup}]");
 
         }
     }

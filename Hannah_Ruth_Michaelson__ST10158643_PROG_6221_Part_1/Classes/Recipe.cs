@@ -10,9 +10,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
     // <summary>
     /// Declaring Delegate to Display Calorie Alert
     /// </summary>
-    public delegate string CalorieAlert();
+    public delegate string CalorieAlert(double cal);
     public class Recipe
     {
+        // <summary>
+        /// Holds the double value of Recipe calories 
+        /// </summary>
+        public double totalCalories { get; set; } = 0.0;
+   
         // <summary>
         /// Holds the string name of recipe
         /// </summary>
@@ -22,12 +27,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// Holds the string value of Recipe calories 
         /// </summary>
         public string strCalories { get; set; } = string.Empty;
-
-        // <summary>
-        /// Holds the double value of Recipe calories 
-        /// </summary>
-        public static double TotalCalories { get; set; }
-
+       
         /// <summary>
         /// Ingredient Class Object List to hold Recipes Ingredients
         /// </summary>
@@ -38,17 +38,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// String List to hold Recipes Steps
         /// </summary>
         public List<string> Steps = new List<string>();
-        //public List<string> Steps { get; set; }
-
-        /// <summary>
-        /// double List to incoming ingredient calories 
-        /// </summary>
-        public List<double> trackCal = new List<double>();
-
-        //FROM WORKER CLASS
-        //double to hold rescale factor 
-        double rescale = 0.0;
-  
+       
 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
@@ -62,62 +52,64 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Parameterized constructor
         /// </summary>
-        public Recipe(string name, List<Ingredient> Ings, List<string> step)
+        public Recipe(string name, List<Ingredient> Ings, List<string> step, double calories)
         {
             Name = name;
             IngredientList = Ings;
             Steps = step;
-            //forech loop to add each ingredient's calroies to trackCal list 
-            foreach (Ingredient ingre in IngredientList)
-            {
-                trackCal.Add( ingre.Calories);
-            }
-            
+            totalCalories = calories;
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Print Array Objects
         /// </summary>
         public void DisplayRecipe()
-        {  
+        {
+            //Declaring Int varibale for iteration 
+            int x = 1;
             //Method to clear console 
             Console.Clear();
 
-            //Heading output
+            //Heading output, change foreground and background 
             Console.ForegroundColor = ConsoleColor.Blue;
-
-            Console.WriteLine(String.Format("{0,-15} {1,-4} {2,-15}", "        _--_--_--_--_ ", "Full Recipe", " _--_--_--_--_"));
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine(String.Format("{0,-15} {1,-4} {2,-15}", " _--_--_--_--_ _--_--_--_--__--_--_--_--_", "Full Recipe", " _--_--_--_--_ _--_--_--_--__--_--_--_--_"));
             Console.BackgroundColor = ConsoleColor.Black;
-          
-           
-          
+
+            //Recipe output, change foreground and background 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("{0,-15} {1,-20}", "Recipe Name:", Name);
-            Console.WriteLine("{0,-15} {1,-20}", "\nTotal Calories:", TotalCalories+" Kcal");
+            Console.WriteLine("{0,-15} {1,-20}", "\nTotal Calories:",  totalCalories+" Kcal");
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\n _--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--__--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--");
             Console.WriteLine("{0,-15} {1,-20}", "Ingredients:", "\n");
-
-            //for loop to display each recipe ingredient using the ingredient class display method 
-            for(int x = 1;  x < IngredientList.Count; x++)
-            {
-                IngredientList[x].DisplayIngredients(x);
-            }            
+            Console.ForegroundColor = ConsoleColor.White;
+            
+            //foreach loop to call the display method of each ingredient object in ingredient list 
+            foreach (Ingredient ingre in this.IngredientList)
+            {                
+                ingre.DisplayIngredients(x);
+                //incrementing int 
+                x++;
+            }
+            //Recipe output, change foreground and background 
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("\n _--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--__--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--");
             Console.WriteLine("{0,-15} {1,-20}", "Instructions:", "\n");
             //for loop to display each step within the Steps list 
+            Console.ForegroundColor = ConsoleColor.White;
             for (int i = 0; i < Steps.Count; i++)
             {
-                Console.WriteLine($"\n{"Step".PadLeft(15)} {i.ToString()}, {Steps[i]}?");
+                Console.WriteLine($"\n{"Step".PadLeft(15)} {(i+1).ToString()}, {Steps[i]}");
 
             }
-
+            //Recipe output, change foreground and background 
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine(" \n_--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--_--__--_--_--_--_-_--_--_--_--_--_--_--_--_--_--_--");
-        
-
-    }
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+        }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to rescale recipe quantities 
+        /// Method to Rescale Recipe Quantities 
         /// </summary>
         public void RescaleRecipe(double rescale)
         {
@@ -137,12 +129,12 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Method to change unit of measure according to rescale
+        /// Method to Change Unit of Measure according to rescale
         /// </summary>
         private void ChangeUnitMeasure()
         {
             //String array to hold unit measures 
-            string[] UM = { "teaspoon", "tablespoon", "cup", "teaspoons", "tablespoons", "cups" };
+           List<string>  UM = new List<string> { "teaspoon", "tablespoon", "cup", "teaspoons", "tablespoons", "cups" };
             //foreach loop to iterate through each ingredient 
             foreach (Ingredient ingre in IngredientList)
             {
@@ -173,7 +165,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 ingre.strQuantity = ValidateInput.FindString(ingre.Quantity);
             }
             //Method call to alter the ingredient unit of measure according to number of quantity 
-            PluralQuantity();
+            CheckQuantity();
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
@@ -196,9 +188,9 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// Method to rest unit of measure after recipe rest
         /// </summary>
         private void RestUnitMeasure()
-        {
+        { 
             //String array to hold unit measures 
-            string[] UM = { "teaspoon", "tablespoon", "cup", "teaspoons", "tablespoons", "cups" };
+           List<string> UM = new List<string>{ "teaspoon", "tablespoon", "cup", "teaspoons", "tablespoons", "cups" };
             //foreach loop to iterate through each ingredient 
             foreach (Ingredient ingre in IngredientList)
             {
@@ -231,14 +223,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 ingre.strQuantity = ValidateInput.FindString(ingre.Quantity);
             }
             //Method call to alter the ingredient unit of measure according to number of quantity 
-            PluralQuantity();
+            CheckQuantity();
         }
 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to add "S" to unit of measure of quantity is greater than one 
         /// </summary>
-        private void PluralQuantity()
+        private void CheckQuantity()
         {
             //foreach loop to iterate through each ingredient 
             foreach (Ingredient ingre in IngredientList)
@@ -256,38 +248,25 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
             }
         }
-        //---------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Method to Calculte the Total Recipe Calories, passing double List 
-        /// </summary>
-        public double CalculateCalories(List<double> calories)
-        {
-            //foreach loop to iterate through each double within trckCal list 
-            foreach (double num in calories)
-            {
-                //TotalCalories is assigned to TotalCalores plus current List double
-                TotalCalories += num;
-            }
-            //return double
-            return TotalCalories;
-        }
+      
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to CheckCalories of Recipe, returns string to display calorie alert
         /// </summary>
-        public string CheckCalories()
+        public string CheckCalories(double calories)
         {
-            //declaring return string
+            // declaring return string
             string alert = null;
-            //method call to calculated recipe's total ingredients 
-            CalculateCalories(trackCal); 
-            //if Total Recipe Calories to greater than or equal to 300
-            if (TotalCalories >= 300)
-            {// return string is assigned to string message with alert explanation information
-                alert = String.Format("{0,-5} {1,-10} {2,-40}", " ", "Alert: The total recipe calories is " + TotalCalories + " , The recipe is over 300 Kcal !!", " ");
+
+            if (calories > 300)
+            {
+                // return string is assigned to string message with alert explanation information
+                alert = String.Format("{0,-5} {1,-10} {2,-40}", " ", "Alert: The total recipe calories is " + calories + " , The recipe is over 300 Kcal !!", " ");
             }
-            //return string
+           
+            // return string
             return alert;
         }
+
     }
 }//__---____---____---____---____---____---____---__.ooo END OF FILE ooo.__---____---____---____---____---____---____---__\\

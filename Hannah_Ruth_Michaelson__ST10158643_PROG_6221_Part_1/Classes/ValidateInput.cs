@@ -14,10 +14,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// <summary>
         /// Declaring and assinging value to variables for default return  
         /// </summary>
-
         static double doubleNum = 0.0;
         static int number = -1;
-
 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
