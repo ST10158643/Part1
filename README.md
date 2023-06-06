@@ -33,7 +33,7 @@ To use the application, follow these steps:
 7. The useru can choose to perform other actions or exit the application.
 8. user menu provides other options, such as viewing recipes, editing recipes, and deleting recipes.
 
-## Review From FeedBack
+## Review From Feedback
 Feedback: After the user chose no on clear option , handle the exception. Code must not crush
 Modification:
 
