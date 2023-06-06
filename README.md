@@ -4,7 +4,7 @@
 
 Part1 command-line application is a Console App built on the .NET framework 4.8.
 Its purpose is to enable users to input and save the ingredients and steps necessary to cook a specific recipe.
-The application was developed as aas a project for the PROGRAMMING 2A course POE Submission and serves 
+The application was developed as a project for the PROGRAMMING 2A course POE Submission and serves 
 as a tool to facilitate the learning of cooking techniques. 
 
 ## Installation
