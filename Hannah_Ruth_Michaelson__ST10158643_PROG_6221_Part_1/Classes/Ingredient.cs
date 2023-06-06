@@ -46,7 +46,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Default Constructor
+        /// Default Constructorr
         /// </summary>
         public Ingredient()
         {

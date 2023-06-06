@@ -595,7 +595,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 //call to recipe DisplayRecipe() method using recipe object in recipe list 
                 RecipeList[index].DisplayRecipe();
                 
-            }*/
+            }
             //method call to menu 
              RecipeOptions();
         }
