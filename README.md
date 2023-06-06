@@ -1,4 +1,4 @@
-# Part1
+# Part2
 
 ## Overview
 
@@ -35,7 +35,7 @@ To use the application, follow these steps:
 
 ## Review From Feedback
 Feedback: After the user chose no on clear option , handle the exception. Code must not crush
-Modification:
+Modification: To correct an issue that causes the program to crash after clearing a recipe, I have made the following improvements to the code. When the user chooses "No" on the clear prompt, an exception is appropriately handled to prevent the crash. The code now includes a menu within the method, enabling the user to select between returning to the main menu, generating a new recipe, or closing the application. The prompt is enclosed within a do-while loop to validate that the user's input falls within the menu range. A switch statement is used to call the appropriate method based on the user's selection. These modifications provide a smoother user experience and ensure the application runs smoothly.
 
 ## References
 Manga, K. (2019) C#: How to change the cursorleft of the console, GeeksforGeeks. GeeksforGeeks. Available at: https://www.geeksforgeeks.org/c-sharp-how-to-change-the-cursorleft-of-the-console/ (Accessed: April 28, 2023). 
@@ -44,6 +44,8 @@ Tirabassi, J. (2022) Why double.tryparse("0.0000", out doublevalue) returns fals
 Troelsen, A. and Japikse, P. (2021) Pro C# 9 with . NET 5: Foundational principles and practices in programming. Berkeley, CA: Apress L. 
 Wagner, B. (no date) .Net documentation, Microsoft Learn. Microsoft Learn. Available at: https://learn.microsoft.com/en-us/dotnet/?view=netframework-4.8 (Accessed: April 28, 2023). 
 OpenAI. (2021) ChatGPT (GPT-3.5). [Computer program]. Available at: https://openai.com (Accessed: April 28, 2023).
+Microsoft , E.T. (2023) List.sort method (system.collections.generic), List.Sort Method (System.Collections.Generic) | Microsoft Learn. Available at: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.sort?view=net-7.0 (Accessed: 06 June 2023). 
+Microsoft , L. (2023) Keyvaluepair struct (system.collections.Generic), KeyValuePair Struct (System.Collections.Generic) | Microsoft Learn. Available at: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.keyvaluepair-2?view=net-7.0 (Accessed: 06 June 2023). 
 
 ## License
 The MIT License (MIT)
