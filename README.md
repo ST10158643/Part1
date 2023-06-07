@@ -33,6 +33,16 @@ To use the application, follow these steps:
 7. The useru can choose to perform other actions or exit the application.
 8. user menu provides other options, such as viewing recipes, editing recipes, and deleting recipes.
 
+## Updates 
+The Recipe app has undergone several updates to enhance its functionality and user experience. Here are the key updates that have been made:
+
+1. Unlimited Recipe Storage: The app now allows users to save an unlimited number of recipes. Users can create and store as many recipes as they desire, providing them with more flexibility in managing their recipe collection.
+2. Flexible Ingredient Management: Users can now add an unlimited number of ingredients to each recipe. There are no limitations on the number of ingredients that can be included, giving users the freedom to capture all the necessary details for their recipes.
+3. Ingredient Food Groupings and Calorie Count: The application now supports storing food groupings and calorie counts for each ingredient. Users can categorize ingredients into different food groups, making it easier to identify and manage recipes based on specific dietary preferences or restrictions. Additionally, the app alerts the user if a recipe exceeds 300 calories, helping them make informed choices about their meal plans.
+4. Recipe Modification: Users now have the ability to make modifications to all stored recipes. They can update the recipe name, ingredients, quantities, food groupings, calorie counts, or any other details as needed. This feature allows users to refine their recipes over time and adapt them to their evolving preferences.
+5. View All Option: The app includes a "Display All" option that displays all stored recipes in alphabetical order. This makes it convenient for users to browse through their recipe collection and quickly locate specific recipes based on their names.
+These updates significantly enhance the versatility and usability of the Recipe app, providing users with more control over their recipe management and enabling them to create, store, and modify recipes according to their individual preferences and dietary requirements.
+
 ## Review From Feedback
 Feedback: After the user chose no on clear option , handle the exception. Code must not crush
 Modification: To correct an issue that causes the program to crash after clearing a recipe, I have made the following improvements to the code. When the user chooses "No" on the clear prompt, an exception is appropriately handled to prevent the crash. The code now includes a menu within the method, enabling the user to select between returning to the main menu, generating a new recipe, or closing the application. The prompt is enclosed within a do-while loop to validate that the user's input falls within the menu range. A switch statement is used to call the appropriate method based on the user's selection. These modifications provide a smoother user experience and ensure the application runs smoothly.
