@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -76,6 +77,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         {
             //setting console window width
             Console.WindowWidth = 100;
+            Console.WindowHeight = 40;
             Display("Welcome to Your Digital Cookbook", ConsoleColor.DarkYellow);
             //method call to RetrieveRecipeData
             RecipeOptions();
@@ -326,28 +328,37 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 
                         case 1:
                             ing.FoodGroup = foodGroups[0];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Starch is a good source of energy and the main source of a range of nutrients \n{"".PadLeft(4)}– but it’s important to eat them in moderation");
                             break;
                         case 2:
                             ing.FoodGroup = foodGroups[1];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Veg and Fruit contain lots of vitamins and minerals that can help prevent diseases ");
                             break;
                         case 3:
                             ing.FoodGroup = foodGroups[2];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Legumes are a good source of fibre, vitamins and minerals and are naturally very low in fat. ");                            
                             break;
                         case 4:
                             ing.FoodGroup = foodGroups[3];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Meat is one of the main sources of vitamin B12, an important vitamin which is only\n{"".PadLeft(4)}found in food from animals, like meat and milk.");
                             break;
                         case 5:
                             ing.FoodGroup = foodGroups[4];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Milk and dairy contain calcium, which helps keep our bones healthy and strong. ");
                             break;
                         case 6:
                             ing.FoodGroup = foodGroups[5];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Some oils and fats are healthier than others, so it’s best to choose unsaturated fats");
                             break;
                         case 7:
                             ing.FoodGroup = foodGroups[6];
+                            Console.WriteLine($"\n{"".PadLeft(4)}Our bodies loses fluid through breathing, sweating or urination therefore\n{"".PadLeft(4)},aim to drink 6 to 8 glasses of water each day to help keep hydrated. ");
                             break;
                     }
                 } while (string.IsNullOrEmpty(ing.FoodGroup));
 
+                Console.WriteLine("\nPress any key to continue");
+                Console.ReadKey();
                 //add ingredient to list 
                 ingList.Add(ing);
                 Console.Clear();
@@ -476,7 +487,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.CursorLeft = 12;
                 //initialization of varibales 
                 input = Console.ReadLine();
-                index = int.Parse(input) - 1;
+                index = ValidateInput.MenuInt(input,RecipeList.Count+1)-1;// int.Parse(input) - 1;
             } while (index < 0 || index >= RecipeList.Count);
 
             //do while to ensure user wants to clear data 
@@ -551,7 +562,8 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //Declaring variables
             string input;
             int index;
-           
+            Console.Clear();
+            Display("Display Recipe", ConsoleColor.DarkBlue);
             //if number of ingredients stored is 0 display error message 
             if (RecipeList.Count == 0)
             {
@@ -570,19 +582,28 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 //for loop to iterate through each recipe name within recipelist 
                 for (int i = 0; i < RecipeList.Count; i++)
                 {
-
                     Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", (i + 1) + "." + RecipeList[i].Name));
                 }
+                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", (RecipeList.Count + 1) + ".Display All"));
                 Console.CursorLeft = 12;
                 //initialization of varibales 
                 input = Console.ReadLine();
-                index = int.Parse(input) -1;
-            } while (index < 0 || index >= RecipeList.Count);
-
-            RecipeList[index].DisplayRecipe();
-            //if index is greater than or equal to 0 and less than the number of recipes in list 
-            if (index >= 0 && index < RecipeList.Count)
+                index = (ValidateInput.MenuInt(input, RecipeList.Count + 2))-1 ;
+            } while (index < 0 || index >= RecipeList.Count+3);
+            Console.Clear();
+            if (index == RecipeList.Count )
             {
+               
+                for(int i = 0; i < RecipeList.Count; i++)
+                {
+                    Display("Recipe " + (i + 1), ConsoleColor.DarkBlue);
+                    RecipeList[i].DisplayRecipe();
+                }
+            }
+            //if index is greater than or equal to 0 and less than the number of recipes in list
+            else if (index >= 0 && index < RecipeList.Count)
+            {
+                Display("Recipe " +(index+1), ConsoleColor.DarkBlue);
                 //call to recipe DisplayRecipe() method using recipe object in recipe list 
                 RecipeList[index].DisplayRecipe();
                 
@@ -599,6 +620,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //Declaring variables
             string input;
             int index;
+            int option;
 
             //clear console window
             Console.Clear();
@@ -629,18 +651,22 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.CursorLeft = 12;
                 //initialization of varibales 
                 input = Console.ReadLine();
-                index = int.Parse(input) - 1;
+                index = ValidateInput.MenuInt(input, RecipeList.Count + 1) - 1;
             } while (index < 0 || index >= RecipeList.Count);
 
-            //output to ask user to select rescale option
-            Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please Select Rescale Option", " "));
-            Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "1. Half Recipe", " "));
-            Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. Double Recipe", " "));
-            Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "3. Triple Recipe", " "));
-            Console.CursorLeft = 12;    
-            input = Console.ReadLine();
-            //passing input to ValidateIput Class method to ensure is valid 
-            int option = ValidateInput.ValidInt(input);
+            do 
+            { 
+
+                //output to ask user to select rescale option
+                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Please Select Rescale Option", " "));
+                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "1. Half Recipe", " "));
+                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "2. Double Recipe", " "));
+                Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "3. Triple Recipe", " "));
+                Console.CursorLeft = 12;    
+                input = Console.ReadLine();
+                //passing input to ValidateIput Class method to ensure is valid 
+                option = ValidateInput.ValidInt(input);
+             } while (option <= 0 || option > 3);
             //switch statement to set rescale number according to user input
             switch (option)
             {
@@ -654,11 +680,14 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                     rescale = 3.0;
                     break;
             }
+            //Update recipe calories
+            RecipeList[index].totalCalories *= rescale;
             //if index is greater than or equal to 0 and less than the number of recipes in list 
             if (index >= 0 && index < RecipeList.Count)
             {
                 //call to recipe RescaleRecipe() method with rescale double as parametre  
                 RecipeList[index].RescaleRecipe( rescale);
+               
                 //add rescale value and RecipeList index value to RescaleValue Dictionary 
                 RescaleValue.Add(rescale, RecipeList[index]);
             }
@@ -704,7 +733,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 Console.CursorLeft = 12;
                 //initialization of varibales 
                 input = Console.ReadLine();
-                index = int.Parse(input) - 1;
+                index = ValidateInput.MenuInt(input, RecipeList.Count + 1) - 1;
             } while (index < 0 || index >= RecipeList.Count);
 
             //if index is greater than or equal to 0 and less than the number of recipes in list 
@@ -730,8 +759,12 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                         RecipeOptions();
                     }
                 }
+                //Update recipe calories
+                RecipeList[index].totalCalories /= rescale;
                 //call to recipe ReseteRecipe() method with rescale double as parametre  
-                RecipeList[index].ResetRecipe(rescale);   
+                RecipeList[index].ResetRecipe(rescale);
+                //call to recipeworker caluculate calories method to update calories 
+                RecipeList[index].totalCalories = CalculateCalories(RecipeList[index].IngredientList);
             }
             //method call to menu 
             RecipeOptions();

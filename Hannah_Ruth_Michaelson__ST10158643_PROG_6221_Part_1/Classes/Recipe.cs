@@ -67,14 +67,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         {
             //Declaring Int varibale for iteration 
             int x = 1;
-            //Method to clear console 
-            Console.Clear();
-
-            //Heading output, change foreground and background 
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine(String.Format("{0,-15} {1,-4} {2,-15}", " _--_--_--_--_ _--_--_--_--__--_--_--_--_", "Full Recipe", " _--_--_--_--_ _--_--_--_--__--_--_--_--_"));
-            Console.BackgroundColor = ConsoleColor.Black;
-
+            
             //Recipe output, change foreground and background 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("{0,-15} {1,-20}", "Recipe Name:", Name);
@@ -112,14 +105,16 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
         /// Method to Rescale Recipe Quantities 
         /// </summary>
         public void RescaleRecipe(double rescale)
-        {
+        {///MAKEING THE CALRIES RESCALE TOO 
             //foreach loop to iterate through each ingredient in ingredientList 
             foreach (Ingredient ingre in IngredientList)
             {
-                // each ingredient's quantity is multiplied by rescale double to change value 
+                // each ingredient's quantity and calories  is multiplied by rescale double to change value 
                 ingre.Quantity *= rescale;
-                // each ingredient's quantity assigned to new double string value using ValidateInput Class Method 
+                ingre.Calories *= rescale;
+                // each ingredient's quantity and calories assigned to new double string value using ValidateInput Class Method 
                 ingre.strQuantity = ValidateInput.FindString(ingre.Quantity);
+                ingre.strCalories = ValidateInput.FindString(ingre.Calories);   
             }
             //Call to method to update unit of measure 
             ChangeUnitMeasure();
@@ -177,6 +172,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             foreach (Ingredient ingre in IngredientList)
             {//divide quantity by rescale double to restore to value 
                 ingre.Quantity /= rescale;
+                ingre.Calories /= rescale;
             }
             //method call to rest unit of measure according to rest quantities 
             RestUnitMeasure();
