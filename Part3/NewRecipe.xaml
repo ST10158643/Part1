@@ -1,0 +1,80 @@
+﻿<Window x:Class="Part3.NewRecipe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Part3"
+        mc:Ignorable="d"
+         d:DesignHeight="450" d:DesignWidth="800"
+        Title="Create Recipe" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Add New Recipe" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,20" Grid.ColumnSpan="2" />
+
+        <Label x:Name="recipeNameLB" Content="Please Enter The Recipe's Name:" Grid.Row="1" Margin="10" />
+        <TextBox x:Name="recipeNameTX" Grid.Row="1" Grid.Column="1" Margin="4,14,10,14" />
+        <Button x:Name="ingBtn" Content="Enter Ingredients" Grid.Row="4" Grid.Column="1" Margin="4,11,10,15" Click="readyIng" />
+
+        <!-- Ingredient input -->
+        <Label x:Name="ingNameLB" Content="Ingredient:" Grid.Row="5" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed"/>
+        <TextBox x:Name="ingNameTX" Grid.Row="5" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed"/>
+
+        <Label x:Name="unitMeasLB" Content="Unit of Measure:" Grid.Row="6" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed" />
+        <ComboBox x:Name="unitMeasCB" Grid.Row="6" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed">
+            <ComboBoxItem Content="Teaspoon" />
+            <ComboBoxItem Content="Tablespoon" />
+            <ComboBoxItem Content="Cup" />
+            <ComboBoxItem Content="Other" />
+        </ComboBox>
+
+        <TextBox x:Name="unitMeasTX" Grid.Row="4" Grid.Column="1" Margin="4,40,10,14" Grid.RowSpan="4" Visibility="Collapsed" />
+
+        <Label x:Name="ingQuantityLB" Content="Quantity:" Grid.Row="7" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed"/>
+        <TextBox x:Name="ingQuantityTX" Grid.Row="7" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed"/>
+
+        <Label x:Name="ingCalLB" Content="Calories:" Grid.Row="8" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed"/>
+        <TextBox x:Name="ingCalTX" Grid.Row="8" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed"/>
+
+        <Label x:Name="foodGrpLB" Content="Food Group:" Grid.Row="8" Grid.Column="0" Margin="10,34,10,-26" Visibility="Collapsed" />
+        <ComboBox x:Name="foodGrpCB" Grid.Row="8" Grid.Column="1" Margin="4,37,10,-29" Visibility="Collapsed">
+            <ComboBoxItem Content="Grains" />
+            <ComboBoxItem Content="Proteins" />
+            <ComboBoxItem Content="Fruits" />
+            <ComboBoxItem Content="Vegetables" />
+            <ComboBoxItem Content="Dairy" />
+            <ComboBoxItem Content="Other" />
+        </ComboBox>
+
+        <TextBox x:Name="foodGrpTX" Grid.Row="8" Margin="6,66,10,-58" Visibility="Collapsed" Grid.Column="1" />
+
+        <Button x:Name="anotherBtn" Content="New ingredient" Grid.Row="8" Margin="124,104,90,-96" Click="anotherBtn_Click" Visibility="Collapsed" Grid.ColumnSpan="2" />
+        <Button x:Name="stepBtn" Content="Next" Grid.Row="8" Margin="124,134,90,-126" Click="readySteps_Click" Visibility="Collapsed" Grid.ColumnSpan="2" />
+
+        <!-- Steps input -->
+        <Label x:Name="stepsLB" Content="Steps" Grid.Row="8" Grid.Column="0" Margin="10,24,10,-27" Visibility="Collapsed"/>
+        <TextBox x:Name="stepTX" Grid.Row="8" Margin="6,26,10,-18" Grid.Column="1" Visibility="Collapsed" />
+        <Button x:Name="anotherStepBtn" Content="Add step" Grid.Row="8" Margin="104,74,110,-66" Click="addStep_Click" Grid.ColumnSpan="2" Visibility="Collapsed"/>
+        <Button x:Name="saveRecipeBtn" Content="Done" Grid.Row="8" Margin="104,104,110,-96" Click="SaveRecipe_Click" Grid.ColumnSpan="2" Visibility="Collapsed"  />
+        <!-- Add relevant UI controls for steps input (e.g., TextBox, ListBox, etc.) -->
+
+        <!-- Other UI elements -->
+        <!-- Add any other UI elements as needed -->
+
+    </Grid>
+</Window>

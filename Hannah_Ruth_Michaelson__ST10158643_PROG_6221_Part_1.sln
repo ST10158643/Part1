@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hannah_Ruth_Michaelson__ST1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculateCalories", "CalculateCalories\CalculateCalories.csproj", "{AB52ED38-CA85-419D-9870-0D12BAA7D9D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Part3", "Part3\Part3.csproj", "{3E67FAF7-C757-4428-8CF1-E6B7801AFC1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AB52ED38-CA85-419D-9870-0D12BAA7D9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB52ED38-CA85-419D-9870-0D12BAA7D9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB52ED38-CA85-419D-9870-0D12BAA7D9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E67FAF7-C757-4428-8CF1-E6B7801AFC1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E67FAF7-C757-4428-8CF1-E6B7801AFC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E67FAF7-C757-4428-8CF1-E6B7801AFC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E67FAF7-C757-4428-8CF1-E6B7801AFC1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
