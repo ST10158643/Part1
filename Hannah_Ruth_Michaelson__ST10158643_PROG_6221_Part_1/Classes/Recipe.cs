@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
@@ -122,6 +123,25 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //call to display rescaled recipe
             DisplayRecipe();
         }
+        public List<Ingredient> RescaleRecipeR(double rescale)
+        {///MAKEING THE CALRIES RESCALE TOO 
+            //foreach loop to iterate through each ingredient in ingredientList 
+            foreach (Ingredient ingre in IngredientList)
+            {
+                // each ingredient's quantity and calories  is multiplied by rescale double to change value 
+                ingre.Quantity *= rescale;
+                ingre.Calories *= rescale;
+                // each ingredient's quantity and calories assigned to new double string value using ValidateInput Class Method 
+                ingre.strQuantity = ValidateInput.FindString(ingre.Quantity);
+                ingre.strCalories = ValidateInput.FindString(ingre.Calories);
+            }
+            //Call to method to update unit of measure 
+            ChangeUnitMeasure();
+            CheckQuantity();
+           // Console.WriteLine(String.Format("{0,-10} {1,-10}", " ", "Rescaled Recipe :\n", " "));
+            //call to display rescaled recipe
+            return IngredientList;
+        }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Change Unit of Measure according to rescale
@@ -160,7 +180,7 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
                 ingre.strQuantity = ValidateInput.FindString(ingre.Quantity);
             }
             //Method call to alter the ingredient unit of measure according to number of quantity 
-            CheckQuantity();
+            //CheckQuantity();
         }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>

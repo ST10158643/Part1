@@ -7,49 +7,47 @@
         mc:Ignorable="d"
         Title="RescaleRecipe" Height="550" Width="800">
     <Grid>
-        <StackPanel x:Name="rescaleInput" Margin="142,61,125,177">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Title -->
+        <TextBlock Text="Rescale Recipe" FontSize="30" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+
+        <StackPanel x:Name="rescaleInput" Margin="102,81,165,157"  >
             <TextBlock Text="Select Recipe:" Width="520" HorizontalAlignment="Center" FontFamily="Bahnschrift" FontSize="14"/>
-            <ComboBox x:Name="recipeComboBox" Width="200"/>
+            <!-- ComboBox for recipe selection -->
+            <ComboBox x:Name="recipeComboBox" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="200" SelectedIndex="0" SelectionChanged="RecipeComboBox_SelectionChanged"></ComboBox>
             <TextBlock Text="Rescale Options:" Margin="0 10 0 5" Width="515" HorizontalAlignment="Center" FontSize="14" FontFamily="Bahnschrift"/>
             <RadioButton x:Name="halfRadioButton" Content="Half" Margin="0 0 0 5" HorizontalAlignment="Center" Width="107"/>
             <RadioButton x:Name="doubleRadioButton" Content="Double" Margin="0 0 0 5" HorizontalAlignment="Center" Width="107"/>
             <RadioButton x:Name="tripleRadioButton" Content="Triple" Margin="0 0 0 5" HorizontalAlignment="Center" Width="107"/>
             <Button x:Name="rescaleBT" Content="Rescale" Click="rescaleBtn_Click" Width="117" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
-        <Grid x:Name="showRescaled" Margin="29,20,93,38" Visibility="Collapsed">
-            <StackPanel Margin="0,79,450,89">
-                <TextBlock x:Name="recipeNameTextBlock" Text="Recipe Name:" Width="100" HorizontalAlignment="Left" FontFamily="Bahnschrift Light" FontSize="16"/>
-                <TextBlock x:Name="totalCaloriesTextBlock" Text="Total Calories:" Width="100" HorizontalAlignment="Left" FontFamily="Bahnschrift Light" FontSize="16"/>
-            </StackPanel>
-            <ListView x:Name="ingredientsListView" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="241,0,0,0" Width="437" Height="200"  d:ItemsSource="{d:SampleData ItemCount=5}">
-                <ListView.Resources>
-                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                    </Style>
-                </ListView.Resources>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Number}" Width="50"/>
-                        <GridViewColumn Header="Ingredients" DisplayMemberBinding="{Binding IngredientInfo}" Width="200"/>
-                        <GridViewColumn Header="Calories" DisplayMemberBinding="{Binding Calories}" Width="80"/>
-                        <GridViewColumn Header="Food Group" DisplayMemberBinding="{Binding FoodGroup}" Width="100"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <ListView x:Name="stepsListView" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="243,205,0,0" Width="434" Height="200">
-                <ListView.Resources>
-                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                    </Style>
-                </ListView.Resources>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Number}" Width="70"/>
-                        <GridViewColumn Header="Step Description" DisplayMemberBinding="{Binding StepDescription}" Width="330"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <Button x:Name="returnMenu" Content="Home Menu" HorizontalAlignment="Left" Margin="546,456,0,0" VerticalAlignment="Top" Width="126" Click="returnMenu_Click"/>
-        </Grid>
+
+        <!-- Recipe details -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="11,18,-1,440" Grid.RowSpan="2" Visibility="Collapsed">
+            <TextBlock x:Name="recipeNameTextBlock" Text="Recipe Name:" Width="200" VerticalAlignment="Center" FontFamily="Bahnschrift Light" FontSize="16" Margin="20,0,0,0"/>
+            <TextBlock x:Name="totalCaloriesTextBlock" Text="Total Calories:" Width="200" FontFamily="Bahnschrift Light" FontSize="16" VerticalAlignment="Bottom" Margin="300,0,0,0" RenderTransformOrigin="0.776,0.535"/>
+        </StackPanel>
+
+        <!-- StackPanel for ingredients -->
+        <StackPanel Grid.Row="2" Background="#F0F0F0" Height="178" Width="640" Margin="90,55,70,225" Visibility="Collapsed">
+            <TextBlock x:Name="ingTB" Text="Ingredients:" FontFamily="Bahnschrift Light" FontSize="16" HorizontalAlignment="Left" Margin="2,5,5,5" Width="179"/>
+            <StackPanel x:Name="ingredientsStackPanel" Margin="10,5,0,0"/>
+        </StackPanel>
+
+        <!-- StackPanel for instructions -->
+        <StackPanel Background="#F0F0F0" Width="646" Margin="80,258,74,39" Grid.Row="2" Visibility="Collapsed">
+            <TextBlock x:Name="stepBlock" Text="Instructions:" FontFamily="Bahnschrift Light" FontSize="16" HorizontalAlignment="Left" Margin="2,5,5,5"/>
+            <StackPanel x:Name="stepsStackPanel" Margin="10,5,0,0"/>
+        </StackPanel>
+
+        <!-- Button for returning to the menu -->
+        <Button x:Name="returnMenu" Content="Home Menu" HorizontalAlignment="Left" Margin="650,37,0,0" VerticalAlignment="Top" Width="100" Click="returnMenu_Click"/>
+
+
     </Grid>
 </Window>

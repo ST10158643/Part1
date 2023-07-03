@@ -54,7 +54,9 @@ namespace Part3
         private void RescaleRecipes_Click(object sender, RoutedEventArgs e)
         {
             // Call the method to handle "Rescale Recipes" option
-            RescaleRecipe rescale = new RescaleRecipe(RecipeList);
+           // RescaleRecipe rescale = new RescaleRecipe(RecipeList);
+            // Call the method to handle "Rescale Recipes" option
+            Rescale rescale = new Rescale(RecipeList);
             this.Hide();
             rescale.Show();
         }

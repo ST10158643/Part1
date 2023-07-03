@@ -61,6 +61,9 @@
     <Compile Include="NewRecipe.xaml.cs">
       <DependentUpon>NewRecipe.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Rescale.xaml.cs">
+      <DependentUpon>Rescale.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RescaleRecipe.xaml.cs">
       <DependentUpon>RescaleRecipe.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NewRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rescale.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,12 +18,12 @@ namespace Part3
     /// <summary>
     /// Interaction logic for DisplayRecipe.xaml
     /// </summary>
-    public partial class DisplayRecipe : Window
+    public partial class Rescale : Window
     {
         //  private List<Recipe> RecipeList; // Add this line to declare the RecipeList variable
         private List<Recipe> RecipeList = new List<Recipe>();
-        
-        public DisplayRecipe(List<Recipe> rec)
+
+        public Rescale(List<Recipe> rec)
         {
             this.RecipeList = rec;
             InitializeComponent();
@@ -46,31 +46,28 @@ namespace Part3
         {
             ComboBox comboBox = (ComboBox)sender;
 
-            if (comboBox.SelectedIndex == 0)
-            {
-                // Display all recipes in the ListView and ListBox
-            }
-            else
-            {
                 // Subtract 1 to account for the "All Recipes" option
-                int selectedIndex = comboBox.SelectedIndex - 1;
+                int selectedIndex = comboBox.SelectedIndex;
 
-                // Display the selected recipe in the ListView
-                if (selectedIndex >= 0 && selectedIndex < RecipeList.Count)
-                {
-                    Recipe selectedRecipe = RecipeList[selectedIndex];
+                RecipeList[selectedIndex].RescaleRecipe(3);
 
                     // Populate the ListView with the transformed ingredient list
-                    var recipeIngs = selectedRecipe.IngredientList.Select((ingre, index) => new
+                    var recipeIngs = RecipeList[selectedIndex].IngredientList.Select((ingre, index) => new
                     {
-                        Number = $"{index + 1} ",IngredientInfo = $"{ingre.Quantity.ToString()} {ingre.UnitofM} of {ingre.Name}",Calories = ingre.Calories,FoodGroup = ingre.FoodGroup}).ToList();
+                        Number = $"{index + 1} ",
+                        IngredientInfo = $"{ingre.Quantity.ToString()} {ingre.UnitofM} of {ingre.Name}",
+                        Calories = ingre.Calories,
+                        FoodGroup = ingre.FoodGroup
+                    }).ToList();
 
-                    var stepList = selectedRecipe.Steps.Select((step, index) => new
+                    var stepList =  RecipeList[selectedIndex].Steps.Select((step, index) => new
                     {
-                        Number = $"Step {index + 1}: ",StepDescription = step }).ToList();
+                        Number = $"Step {index + 1}: ",
+                        StepDescription = step
+                    }).ToList();
                     // Clear the existing content in the StackPanel
-                   /* ingredientsStackPanel.Children.Clear();
-                    stepsStackPanel.Children.Clear();*/
+                    /* ingredientsStackPanel.Children.Clear();
+                     stepsStackPanel.Children.Clear();*/
 
                     // Create CheckBox and TextBox for each ingredient and add them to the StackPanel
                     foreach (var ingredient in recipeIngs)
@@ -89,7 +86,7 @@ namespace Part3
 
                         ingredientsStackPanel.Children.Add(ingredientPanel);
                     }
-                    foreach (var step in stepList )
+                    foreach (var step in stepList)
                     {
                         StackPanel stepPanel = new StackPanel();
                         stepPanel.Orientation = Orientation.Horizontal;
@@ -106,13 +103,13 @@ namespace Part3
                         stepsStackPanel.Children.Add(stepPanel);
                     }
 
-                    recipeNameTextBlock.Text = $"Recipe Name: {selectedRecipe.Name}";
-                    totalCaloriesTextBlock.Text = $"Total Calories: {selectedRecipe.totalCalories} Kcal";
-                }
-            }
+                    recipeNameTextBlock.Text = $"Recipe Name: {RecipeList[selectedIndex].Name}";
+                    totalCaloriesTextBlock.Text = $"Total Calories: {RecipeList[selectedIndex].totalCalories} Kcal";
+                
+            
         }
 
-       
+
         private void returnMenu_Click(object sender, RoutedEventArgs e)
         {
             UserMenu userMenu = new UserMenu();
@@ -121,7 +118,6 @@ namespace Part3
         }
 
 
-       
+
     }
 }
-  
