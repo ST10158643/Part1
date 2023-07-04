@@ -1,4 +1,5 @@
 ﻿using Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
@@ -23,49 +24,71 @@ namespace Part3
         public bool val;
         public bool add;
         public bool addAnotherStep;
+        private UserMenu userMenu;
 
         public NewRecipe()
         {
             InitializeComponent();
         }
-        //Set UI or Ingredient input 
+
+        public NewRecipe(List<Recipe> recipeList, UserMenu userMenu)
+        {
+            InitializeComponent();
+            this.RecipeList = recipeList;
+            this.userMenu = userMenu;
+        }
+
+        // Event handler for "Ready" button click
         private void readyIng(object sender, RoutedEventArgs e)
         {
             // Retrieve recipe name from the text box
-            rName = recipeNameTX.Text;
-            changeUI(1);
-
-        }
-
-        // New Ing, add another ing
+            bool val = ValidateInput.IsStringNullW(recipeNameTX.Text);
+            if (val)
+            {
+                rName = recipeNameTX.Text;
+                changeUI(2); // Move to ingredient input UI
+            }
+        }// Event handler for "Add Another Ingredient" button click
         private void anotherBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Hide the error labels
+            eQuan.Visibility = Visibility.Collapsed;
+            eName.Visibility = Visibility.Collapsed;
+            eUM.Visibility = Visibility.Collapsed;
+            eFoodGroup.Visibility = Visibility.Collapsed;
+            eCal.Visibility = Visibility.Collapsed;
 
+            // Add the ingredient to the ingredient list
             ingredientList.Add(addIng());
+
             // Reset ingredient input fields
             ingNameTX.Text = "";
             ingQuantityTX.Text = "";
             ingCalTX.Text = "";
-            unitMeasCB.SelectedIndex = -1;
-            unitMeasTX.Visibility = Visibility.Collapsed;
+            unitMeasTX.Text = "";
             foodGrpCB.SelectedIndex = -1;
-
-
         }
         // Done adding ing, add steps 
         private void readySteps_Click(object sender, RoutedEventArgs e)
         {
-            ingredientList.Add(addIng());
-            changeUI(2);
-
+            eQuan.Visibility = Visibility.Collapsed;
+            eName.Visibility = Visibility.Collapsed;
+            eUM.Visibility = Visibility.Collapsed;
+            eFoodGroup.Visibility = Visibility.Collapsed;
+            eCal.Visibility = Visibility.Collapsed;
+            changeUI(3); // Move to step input UI
         }
-            
+
+        // Event handler for "Add Step" button click
         private void addStep_Click(object sender, RoutedEventArgs e)
-        {          
-            
+        {
+            // Add the step to the step list
             steps.Add(addStep());
+
+            // Reset the step input field
             stepTX.Text = "";
         }
+       
         public string addStep()
         {
             // Retrieve the value entered in the step input TextBox
@@ -127,32 +150,17 @@ namespace Part3
                 ing.Name = ingNameTX.Text;
             }
 
-            // Retrieve unit of measure from the combo box
-            ComboBoxItem unitItem = unitMeasCB.SelectedItem as ComboBoxItem;
-            if (unitItem != null)
+            // Retrieve unit of measure
+            val = ValidateInput.IsStringNull(unitMeasTX.Text);
+            if (val)
             {
-                input = unitItem.Content.ToString();
-                if (input == "Other")
-                {
-                    unitMeasTX.Visibility = Visibility.Visible;
-                    bool val = ValidateInput.IsStringNull(unitMeasTX.Text);
-                    if (val)
-                    {
-                        // Assigning ingredient UM to input
-                        ing.UnitofM = unitMeasTX.Text;
-                    }
-                }
-                else
-                {
-                    bool val = ValidateInput.IsStringNull(input);
-                    if (val)
-                    {
-                        // Assigning ingredient UM to input
-                        ing.UnitofM = input;
-                    }
-                }
+                ing.UnitofM = unitMeasTX.Text;
+                eUM.Visibility = Visibility.Collapsed; // Hide the error label
             }
-
+            else
+            {
+                eUM.Visibility = Visibility.Visible; // Show the error label
+            }
             // Retrieve food group from the combo box
             ComboBoxItem foodGroupItem = (ComboBoxItem)foodGrpCB.SelectedItem;
             if (foodGroupItem != null)
@@ -213,22 +221,46 @@ namespace Part3
             }
         }
 
-        private void changeUI(int i)
+
+        // Method to change the UI based on the given mode
+        private void changeUI(int mode)
         {
-            if (i == 1)
+            // Hide all UI elements
+            recipeNameLB.Visibility = Visibility.Collapsed;
+            recipeNameTX.Visibility = Visibility.Collapsed;
+            ingBtn.Visibility = Visibility.Collapsed;
+            ingNameLB.Visibility = Visibility.Collapsed;
+            ingNameTX.Visibility = Visibility.Collapsed;
+            unitMeasLB.Visibility = Visibility.Collapsed;
+            unitMeasTX.Visibility = Visibility.Collapsed;
+            ingQuantityLB.Visibility = Visibility.Collapsed;
+            ingQuantityTX.Visibility = Visibility.Collapsed;
+            ingCalLB.Visibility = Visibility.Collapsed;
+            ingCalTX.Visibility = Visibility.Collapsed;
+            foodGrpLB.Visibility = Visibility.Collapsed;
+            foodGrpCB.Visibility = Visibility.Collapsed;
+            anotherBtn.Visibility = Visibility.Collapsed;
+            stepBtn.Visibility = Visibility.Collapsed;
+            stepTX.Visibility = Visibility.Collapsed;
+            stepsLB.Visibility = Visibility.Collapsed;
+            anotherStepBtn.Visibility = Visibility.Collapsed;
+            saveRecipeBtn.Visibility = Visibility.Collapsed;
+
+            // Show UI elements based on the mode
+            if (mode == 1)
             {
-                // Hide the recipe name label and text box
-                recipeNameLB.Visibility = Visibility.Collapsed;
-                recipeNameTX.Visibility = Visibility.Collapsed;
-                ingBtn.Visibility = Visibility.Collapsed;
-
-
-
-
+                // Show recipe name input
+                recipeNameLB.Visibility = Visibility.Visible;
+                recipeNameTX.Visibility = Visibility.Visible;
+                ingBtn.Visibility = Visibility.Visible;
+            }
+            else if (mode == 2)
+            {
+                // Show ingredient input
                 ingNameLB.Visibility = Visibility.Visible;
                 ingNameTX.Visibility = Visibility.Visible;
                 unitMeasLB.Visibility = Visibility.Visible;
-                unitMeasCB.Visibility = Visibility.Visible;
+                unitMeasTX.Visibility = Visibility.Visible;
                 ingQuantityLB.Visibility = Visibility.Visible;
                 ingQuantityTX.Visibility = Visibility.Visible;
                 ingCalLB.Visibility = Visibility.Visible;
@@ -237,181 +269,44 @@ namespace Part3
                 foodGrpCB.Visibility = Visibility.Visible;
                 anotherBtn.Visibility = Visibility.Visible;
                 stepBtn.Visibility = Visibility.Visible;
+
+                recipeNameLB.Visibility = Visibility.Collapsed;
+                recipeNameTX.Visibility = Visibility.Collapsed;
+                ingBtn.Visibility = Visibility.Collapsed;
             }
-            else if (i == 2)
+            else if (mode == 3)
             {
-                // Hide the ingredient-related elements
-                ingNameLB.Visibility = Visibility.Collapsed;
-                ingNameTX.Visibility = Visibility.Collapsed;
-                unitMeasLB.Visibility = Visibility.Collapsed;
-                unitMeasCB.Visibility = Visibility.Collapsed;
-                ingQuantityLB.Visibility = Visibility.Collapsed;
-                ingQuantityTX.Visibility = Visibility.Collapsed;
-                ingCalLB.Visibility = Visibility.Collapsed;
-                ingCalTX.Visibility = Visibility.Collapsed;
-                foodGrpLB.Visibility = Visibility.Collapsed;
-                foodGrpCB.Visibility = Visibility.Collapsed;
-                anotherBtn.Visibility = Visibility.Collapsed;
-                stepBtn.Visibility = Visibility.Collapsed;
-                // Show the step-related elements
+                // Show step input
                 stepTX.Visibility = Visibility.Visible;
                 stepsLB.Visibility = Visibility.Visible;
                 anotherStepBtn.Visibility = Visibility.Visible;
                 saveRecipeBtn.Visibility = Visibility.Visible;
             }
-            else if (i == 3)
+            else if (mode == 4)
             {
-                stepTX.Visibility = Visibility.Collapsed;
-                stepsLB.Visibility = Visibility.Collapsed;
-                anotherStepBtn.Visibility = Visibility.Collapsed;
-                saveRecipeBtn.Visibility = Visibility.Collapsed;
-            }
-            else if (i == 4)
-            {
-                // Clear the text box and other UI elements
+                // Clear all input fields
                 recipeNameTX.Text = string.Empty;
-
-                // Clear other UI elements related to ingredients
                 ingNameTX.Text = string.Empty;
+                unitMeasTX.Text = string.Empty;
                 ingQuantityTX.Text = string.Empty;
                 ingCalTX.Text = string.Empty;
-                unitMeasCB.SelectedIndex = -1;
-                unitMeasTX.Text = string.Empty;
                 foodGrpCB.SelectedIndex = -1;
-
-                // Clear other UI elements related to steps
                 stepTX.Text = string.Empty;
 
+                // Reset the ingredient list and step list
+                ingredientList.Clear();
+                steps.Clear();
 
-                // Hide ingredient-related elements
-                ingNameLB.Visibility = Visibility.Collapsed;
-                ingNameTX.Visibility = Visibility.Collapsed;
-                unitMeasLB.Visibility = Visibility.Collapsed;
-                unitMeasCB.Visibility = Visibility.Collapsed;
-                ingQuantityLB.Visibility = Visibility.Collapsed;
-                ingQuantityTX.Visibility = Visibility.Collapsed;
-                ingCalLB.Visibility = Visibility.Collapsed;
-                ingCalTX.Visibility = Visibility.Collapsed;
-                foodGrpLB.Visibility = Visibility.Collapsed;
-                foodGrpCB.Visibility = Visibility.Collapsed;
-                anotherBtn.Visibility = Visibility.Collapsed;
+                // Reset the recipe name
+                rName = string.Empty;
 
-                // Hide step-related elements
-                stepTX.Visibility = Visibility.Collapsed;
-                stepsLB.Visibility = Visibility.Collapsed;
-                anotherStepBtn.Visibility = Visibility.Collapsed;
-                saveRecipeBtn.Visibility = Visibility.Collapsed;
-
-                // Show recipe name-related elements
-                recipeNameLB.Visibility = Visibility.Visible;
-                recipeNameTX.Visibility = Visibility.Visible;
-                ingBtn.Visibility = Visibility.Visible;
-
-                // Clear the ingredient list
-
-
-                // Reset flags
-                add = false;
-                addAnotherStep = false;
+                // Move back to the first UI
+                changeUI(1);
             }
         }
-
     }
-}
+} 
 
-    // Method to retrieve ingredient data
-    /*   private List<Ingredient> GetIngredients()
-       {
-           // Declaring variables 
-           string input;
-           // Declaring instance of Ingredient for each ingredient
-           Ingredient ing;
-           // Declaring and initializing Ingredient List 
-           List<Ingredient> ingList = new List<Ingredient>();
 
-          bool add = true;
-
-           do
-           {
-               // Instantiate a new Ingredient object
-               ing = new Ingredient();
-
-               // Retrieve ingredient name from the text box
-               input = ingNameTX.Text;
-               val = ValidateInput.IsStringNull(input);
-               if (val)
-               {
-                   // Assigning ingredient name to input 
-                   ing.Name = input;
-               }
-
-               // Retrieve unit of measure from the combo box
-               ComboBoxItem unitItem = unitMeasCB.SelectedItem as ComboBoxItem;
-               if (unitItem != null)
-               {
-                   input = unitItem.Content.ToString();
-                   if (input == "Other")
-                   {
-                       unitMeasTX.Visibility = Visibility.Visible;
-                       bool val = ValidateInput.IsStringNull(unitMeasTX.Text);
-                       if (val)
-                       {
-                           // Assigning ingredient UM to input
-                           ing.UnitofM = unitMeasTX.Text;
-                       }
-                   }
-                   else
-                   {
-                       bool val = ValidateInput.IsStringNull(input);
-                       if (val)
-                       {
-                           // Assigning ingredient UM to input
-                           ing.UnitofM = input;
-                       }
-                   }
-               }
-
-               // Retrieve food group from the combo box
-               ComboBoxItem foodGroupItem = (ComboBoxItem)foodGrpCB.SelectedItem;
-               if (foodGroupItem != null)
-               {
-                   input = foodGroupItem.Content.ToString();
-                   bool val = ValidateInput.IsStringNull(input);
-                   if (val)
-                   {
-                       // Assigning ingredient foodgroup to input
-                       ing.FoodGroup = input;
-                   }
-               }
-
-               // Retrieve ingredient quantity from the text box
-               input = ingQuantityTX.Text;
-               ing.Quantity = ValidateInput.ValidDouble(input);
-
-               // Retrieve ingredient Calories from the text box
-               input = ingCalTX.Text;
-               ing.Calories = ValidateInput.ValidDouble(input);
-
-               // Add the ingredient to the list
-               ingList.Add(ing);
-
-               // Reset ingredient input fields
-               ingNameTX.Text = "";
-               ingQuantityTX.Text = "";
-               ingCalTX.Text = "";
-               unitMeasCB.SelectedIndex = -1;
-               unitMeasTX.Visibility = Visibility.Collapsed;
-               foodGrpCB.SelectedIndex = -1;
-
-               if (anotherBtn.IsPressed)
-                   add = true;
-               else
-                   add = false;
-              } while (add);
-
-           return ingList;
-       }*/
-
-    // Method to calculate recipe calories
-
+   
 

@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
 namespace Part3
 {
     /// <summary>
@@ -20,33 +19,41 @@ namespace Part3
     /// </summary>
     public partial class UserMenu : Window
     {
-        private List<Recipe> RecipeList = new List<Recipe>();
+        public List<Recipe> recipeList;
+        public Dictionary<double, Recipe> RescaleValue = new Dictionary<double, Recipe>();
 
-        Dictionary<double, Recipe> RescaleValue = new Dictionary<double, Recipe>();
         public UserMenu()
         {
             InitializeComponent();
+            recipeList = GetInitialRecipeList();
         }
+
         public UserMenu(List<Recipe> rec)
         {
-            this.RecipeList = rec;
             InitializeComponent();
-
+            recipeList = rec;
         }
 
         private void CreateNewRecipe_Click(object sender, RoutedEventArgs e)
         {
-            // Call the method to handle "Create New Recipe" option
-           // RetrieveRecipeData();
-            NewRecipe newRecipe = new NewRecipe();
-            this.Hide();
-            newRecipe.Show();
+            if (recipeList.Count > 0)
+            {
+                NewRecipe newMore = new NewRecipe(recipeList, this); // Pass the recipeList and UserMenu instance
+                this.Hide();
+                newMore.Show();
+            }
+            else
+            {
+                NewRecipe newRecipe = new NewRecipe(); // Pass the recipeList and UserMenu instance
+                this.Hide();
+                newRecipe.Show();
+            }
         }
 
         private void DisplayRecipes_Click(object sender, RoutedEventArgs e)
         {
             // Call the method to handle "Display Recipes" option
-            DisplayRecipe display = new DisplayRecipe(RecipeList);
+            DisplayRecipe display = new DisplayRecipe(recipeList);
             this.Hide();
             display.Show();
         }
@@ -54,23 +61,25 @@ namespace Part3
         private void RescaleRecipes_Click(object sender, RoutedEventArgs e)
         {
             // Call the method to handle "Rescale Recipes" option
-           // RescaleRecipe rescale = new RescaleRecipe(RecipeList);
-            // Call the method to handle "Rescale Recipes" option
-            Rescale rescale = new Rescale(RecipeList);
+            Rescale rescale = new Rescale(recipeList, this); // Pass the UserMenu instance as the second argument
             this.Hide();
             rescale.Show();
         }
 
         private void ResetRecipes_Click(object sender, RoutedEventArgs e)
         {
-            // Call the method to handle "Reset Recipes" option
-           
+            Reset reset = new Reset(recipeList, this); // Pass the UserMenu instance as the second argument
+            this.Hide();
+            reset.Show();
+
         }
 
         private void ClearRecipes_Click(object sender, RoutedEventArgs e)
         {
-            // Call the method to handle "Clear Recipes" option
-            
+            Clear clear = new Clear(recipeList, this); // Pass the UserMenu instance as the second argument
+            this.Hide();
+            clear.Show();
+
         }
 
         private void ExitProgram_Click(object sender, RoutedEventArgs e)
@@ -79,12 +88,25 @@ namespace Part3
             EndProg();
         }
 
-      
-
         private void EndProg()
         {
             // Implementation for "Exit Program" option
             Close();
+        }
+
+        private List<Recipe> GetInitialRecipeList()
+        {
+            // TODO: Implement the logic to retrieve the initial recipe list
+            // For now, return a new empty list as an example
+            return new List<Recipe>();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            Filter fil = new Filter(recipeList, this); // Pass the UserMenu instance as the second argument
+            this.Hide();
+            fil.Show();
         }
     }
 }

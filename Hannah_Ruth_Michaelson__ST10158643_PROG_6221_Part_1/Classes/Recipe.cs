@@ -142,6 +142,19 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //call to display rescaled recipe
             return IngredientList;
         }
+        public double CalculateCalories()
+        {
+            //Declare and instiating Int variable
+            double kCal = 0;
+            // foreach loop to iterate through each ingredient's calories within the ingredients list
+            foreach (Ingredient ingre in IngredientList)
+            {
+                // calorie variable is assigned to, calories plus the current ingredient's calorie value
+                kCal += ingre.Calories;
+            }
+            // return the total calories
+            return kCal;
+        }
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to Change Unit of Measure according to rescale

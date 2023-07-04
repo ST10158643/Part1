@@ -55,8 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Clear.xaml.cs">
+      <DependentUpon>Clear.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DisplayRecipe.xaml.cs">
       <DependentUpon>DisplayRecipe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Filter.xaml.cs">
+      <DependentUpon>Filter.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewRecipe.xaml.cs">
       <DependentUpon>NewRecipe.xaml</DependentUpon>
@@ -64,13 +70,21 @@
     <Compile Include="Rescale.xaml.cs">
       <DependentUpon>Rescale.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RescaleRecipe.xaml.cs">
-      <DependentUpon>RescaleRecipe.xaml</DependentUpon>
+    <Compile Include="Reset.xaml.cs">
+      <DependentUpon>Reset.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserMenu.xaml.cs">
       <DependentUpon>UserMenu.xaml</DependentUpon>
     </Compile>
+    <Page Include="Clear.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DisplayRecipe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Filter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -94,7 +108,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="RescaleRecipe.xaml">
+    <Page Include="Reset.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

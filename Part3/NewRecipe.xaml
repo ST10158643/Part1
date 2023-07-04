@@ -4,20 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Part3"
-        mc:Ignorable="d"
-         d:DesignHeight="450" d:DesignWidth="800"
-        Title="Create Recipe" Height="450" Width="800">
-    <Grid>
+        mc:Ignorable="d"        
+        Title="Create Recipe" Height="800" Width="800">
+    <Grid Background="#F598">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="61.28" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="0" />
+            <RowDefinition Height="Auto" MinHeight="17.291" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="33.96" />
+            <RowDefinition Height="Auto" MinHeight="33.96" />
+            <RowDefinition Height="33.96" MinHeight="33.96" />
+            <RowDefinition Height="11.39" />
+            <RowDefinition Height="22.57"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -25,56 +25,53 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Add New Recipe" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,20" Grid.ColumnSpan="2" />
 
-        <Label x:Name="recipeNameLB" Content="Please Enter The Recipe's Name:" Grid.Row="1" Margin="10" />
-        <TextBox x:Name="recipeNameTX" Grid.Row="1" Grid.Column="1" Margin="4,14,10,14" />
-        <Button x:Name="ingBtn" Content="Enter Ingredients" Grid.Row="4" Grid.Column="1" Margin="4,11,10,15" Click="readyIng" />
+        <Label Content="Add New Recipe" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="143,10,0,20" Grid.Column="1" Width="134"/>
+
+        <Label x:Name="recipeNameLB" Content="Please Enter The Recipe's Name:" Grid.Row="3" Margin="10,2,10,24"  Grid.RowSpan="3"/>
+        <TextBox x:Name="recipeNameTX" Grid.Row="3" Grid.Column="1" Margin="4,3,10,20" Grid.RowSpan="3"/>
+        <Button x:Name="ingBtn" Content="Enter Ingredients" Grid.Row="5" Grid.Column="1" Margin="4,31,10,27" Click="readyIng" Grid.RowSpan="2" />
 
         <!-- Ingredient input -->
-        <Label x:Name="ingNameLB" Content="Ingredient:" Grid.Row="5" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed"/>
-        <TextBox x:Name="ingNameTX" Grid.Row="5" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed"/>
+        <Label x:Name="ingNameLB" Content="Ingredient:" Width="200" Grid.Row="5" Grid.Column="0" Margin="10,4,10,4" Visibility="Hidden" />
+        <TextBox x:Name="ingNameTX" Grid.Row="5" Grid.Column="1" Margin="4,4,10,4" Visibility="Hidden"  />
 
-        <Label x:Name="unitMeasLB" Content="Unit of Measure:" Grid.Row="6" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed" />
-        <ComboBox x:Name="unitMeasCB" Grid.Row="6" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed">
-            <ComboBoxItem Content="Teaspoon" />
-            <ComboBoxItem Content="Tablespoon" />
-            <ComboBoxItem Content="Cup" />
-            <ComboBoxItem Content="Other" />
+        <Label x:Name="unitMeasLB" Content="Unit of Measure:" Grid.Row="9" Grid.Column="0" Margin="10,45,90,-48" Visibility="Hidden" />
+
+        <TextBox x:Name="unitMeasTX" Grid.Row="9" Grid.Column="1" Margin="4,51,10,-54" Visibility="Hidden"   />
+
+        <Label x:Name="ingQuantityLB" Content="Quantity:" Grid.Row="7" Grid.Column="0" Margin="10,4,114,4" Visibility="Hidden" />
+        <TextBox x:Name="ingQuantityTX" Grid.Row="7" Grid.Column="1" Margin="4,4,10,4" Visibility="Hidden"  />
+
+        <Label x:Name="ingCalLB" Content="Calories:" Grid.Row="8" Grid.Column="0" Margin="10,4,127,4" Grid.RowSpan="2" Visibility="Hidden"/>
+        <TextBox x:Name="ingCalTX" Grid.Row="8" Grid.Column="1" Margin="4,4,10,4" Grid.RowSpan="2" Visibility="Hidden" />
+
+        <Label x:Name="foodGrpLB" Content="Food Group:" Grid.Row="6" Grid.Column="0" Margin="10,6,105,2" Visibility="Hidden" />
+        <ComboBox x:Name="foodGrpCB" Grid.Row="6" Grid.Column="1" Margin="4,9,10,33" Grid.RowSpan="2" Visibility="Hidden"  >
+            <ComboBoxItem Content="Starch" />
+            <ComboBoxItem Content="Vegetables and Fruits" />
+            <ComboBoxItem Content="Legumes" />
+            <ComboBoxItem Content="Meat, Chiken, Fish and Eggs" />
+            <ComboBoxItem Content="Milk and Dairy" />
+            <ComboBoxItem Content="Fats and Oils" />
+            <ComboBoxItem Content="Water" />
         </ComboBox>
 
-        <TextBox x:Name="unitMeasTX" Grid.Row="4" Grid.Column="1" Margin="4,40,10,14" Grid.RowSpan="4" Visibility="Collapsed" />
-
-        <Label x:Name="ingQuantityLB" Content="Quantity:" Grid.Row="7" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed"/>
-        <TextBox x:Name="ingQuantityTX" Grid.Row="7" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed"/>
-
-        <Label x:Name="ingCalLB" Content="Calories:" Grid.Row="8" Grid.Column="0" Margin="10,4,10,4" Visibility="Collapsed"/>
-        <TextBox x:Name="ingCalTX" Grid.Row="8" Grid.Column="1" Margin="4,4,10,4" Visibility="Collapsed"/>
-
-        <Label x:Name="foodGrpLB" Content="Food Group:" Grid.Row="8" Grid.Column="0" Margin="10,34,10,-26" Visibility="Collapsed" />
-        <ComboBox x:Name="foodGrpCB" Grid.Row="8" Grid.Column="1" Margin="4,37,10,-29" Visibility="Collapsed">
-            <ComboBoxItem Content="Grains" />
-            <ComboBoxItem Content="Proteins" />
-            <ComboBoxItem Content="Fruits" />
-            <ComboBoxItem Content="Vegetables" />
-            <ComboBoxItem Content="Dairy" />
-            <ComboBoxItem Content="Other" />
-        </ComboBox>
-
-        <TextBox x:Name="foodGrpTX" Grid.Row="8" Margin="6,66,10,-58" Visibility="Collapsed" Grid.Column="1" />
-
-        <Button x:Name="anotherBtn" Content="New ingredient" Grid.Row="8" Margin="124,104,90,-96" Click="anotherBtn_Click" Visibility="Collapsed" Grid.ColumnSpan="2" />
-        <Button x:Name="stepBtn" Content="Next" Grid.Row="8" Margin="124,134,90,-126" Click="readySteps_Click" Visibility="Collapsed" Grid.ColumnSpan="2" />
+        <Button x:Name="anotherBtn" Content="New ingredient" Grid.Row="9" Margin="7,108,90,-111" Click="anotherBtn_Click"  Grid.Column="1" Visibility="Hidden" />
+        <Button x:Name="stepBtn" Content="Next" Grid.Row="9" Margin="7,153,90,-156" Click="readySteps_Click" Grid.Column="1" Visibility="Hidden"  />
 
         <!-- Steps input -->
-        <Label x:Name="stepsLB" Content="Steps" Grid.Row="8" Grid.Column="0" Margin="10,24,10,-27" Visibility="Collapsed"/>
-        <TextBox x:Name="stepTX" Grid.Row="8" Margin="6,26,10,-18" Grid.Column="1" Visibility="Collapsed" />
-        <Button x:Name="anotherStepBtn" Content="Add step" Grid.Row="8" Margin="104,74,110,-66" Click="addStep_Click" Grid.ColumnSpan="2" Visibility="Collapsed"/>
-        <Button x:Name="saveRecipeBtn" Content="Done" Grid.Row="8" Margin="104,104,110,-96" Click="SaveRecipe_Click" Grid.ColumnSpan="2" Visibility="Collapsed"  />
-        <!-- Add relevant UI controls for steps input (e.g., TextBox, ListBox, etc.) -->
-
-        <!-- Other UI elements -->
-        <!-- Add any other UI elements as needed -->
+        <Label x:Name="stepsLB" Content="Steps" Grid.Row="9" Grid.Column="0" Margin="10,13,125,-27" Visibility="Collapsed" />
+        <TextBox x:Name="stepTX" Grid.Row="9" Margin="6,15,10,-18" Grid.Column="1" Visibility="Collapsed" />
+        <Button x:Name="anotherStepBtn" Content="Add step" Grid.Row="9" Margin="104,63,110,-66" Click="addStep_Click" Grid.ColumnSpan="2" Visibility="Hidden" />
+        <Button x:Name="saveRecipeBtn" Content="Done" Grid.Row="9" Margin="104,93,110,-96" Click="SaveRecipe_Click" Grid.ColumnSpan="2" Visibility="Hidden"  />
+        <!-- Error Lables -->
+        <Label x:Name="eName" Content="Invalid Name" HorizontalAlignment="Left" Margin="114,6,0,0" Grid.Row="5" VerticalAlignment="Top" FontSize="10" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="DarkRed" Height="22" Width="68" Visibility="Hidden" />
+        <Label x:Name="eFoodGroup" Content="Invalid Food Group" HorizontalAlignment="Left" Margin="100,0,0,0" Grid.Row="6" VerticalAlignment="Center" FontSize="10" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="DarkRed" Height="22" Width="94" Visibility="Hidden" />
+        <Label x:Name="eQuan" Content="Invalid Quatity" HorizontalAlignment="Left" Margin="100,3,0,0" Grid.Row="7" VerticalAlignment="Top" FontSize="10" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="DarkRed" Height="22" Width="73" Visibility="Hidden" />
+        <Label x:Name="eCal" Content="Invalid Calories" HorizontalAlignment="Left" Margin="100,6,0,0" Grid.Row="8" VerticalAlignment="Top" FontSize="10" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="DarkRed" Height="22" Width="73" Grid.RowSpan="2" Visibility="Hidden" />
+        <Label x:Name="eUM" Content="Invalid Unit of Measure&#xD;&#xA;" HorizontalAlignment="Left" Margin="59,41,0,0" VerticalAlignment="Top" FontSize="10" FontFamily="Bahnschrift" FontWeight="Bold" Foreground="DarkRed" Height="22" Width="141" Grid.RowSpan="4" Visibility="Hidden" />
 
     </Grid>
+
 </Window>

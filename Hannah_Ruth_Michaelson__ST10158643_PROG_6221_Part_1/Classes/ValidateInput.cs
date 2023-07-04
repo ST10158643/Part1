@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
 {
@@ -53,6 +54,33 @@ namespace Hannah_Ruth_Michaelson__ST10158643_PROG_6221_Part_1.Classes
             //return bool
             return valid;
         }
+        public static bool IsStringNullW(string input)
+        {
+            bool valid = false;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(input))
+                {
+                    valid = true;
+                }
+                else
+                {
+                    throw new UserException("No value has been entered");
+                }
+            }
+            catch (UserException e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (OutOfMemoryException)
+            {
+                MessageBox.Show("Error: Out of memory. Please reduce the number of ingredients or increase available memory.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return valid;
+        }
+
         //---------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// Method to take in menu string Input and ensure is a valid number 

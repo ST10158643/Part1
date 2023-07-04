@@ -20,16 +20,16 @@ namespace Part3
     /// </summary>
     public partial class DisplayRecipe : Window
     {
-        //  private List<Recipe> RecipeList; // Add this line to declare the RecipeList variable
-        private List<Recipe> RecipeList = new List<Recipe>();
-        
+        public List<Recipe> RecipeList { get; set; }
+
+
         public DisplayRecipe(List<Recipe> rec)
         {
-            this.RecipeList = rec;
+            RecipeList = rec;
             InitializeComponent();
             PopulateRecipeList();
         }
-
+        // Populates the recipeComboBox with recipe names
         private void PopulateRecipeList()
         {
             // Sort RecipeList based on the Name property of each Recipe object in ascending order
@@ -41,85 +41,214 @@ namespace Part3
                 recipeComboBox.Items.Add(recipe.Name);
             }
         }
-
-        private void RecipeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void displayBtn_Click(object sender, RoutedEventArgs e)
         {
-            ComboBox comboBox = (ComboBox)sender;
-
-            if (comboBox.SelectedIndex == 0)
+            int selectedIndex = recipeComboBox.SelectedIndex -1;
+           
+            if (recipeComboBox.SelectedIndex == 0)
             {
-                // Display all recipes in the ListView and ListBox
+                DisplayAll();               
             }
             else
             {
-                // Subtract 1 to account for the "All Recipes" option
-                int selectedIndex = comboBox.SelectedIndex - 1;
+                UpdateRecipeDetails(selectedIndex);
+            }
+        }
+        // Updates the UI with the recipe details
+        private void UpdateRecipeDetails(int selectedIndex)
+        {
+            // Clear the existing content in the StackPanel
+            recPanel.Children.Clear();
 
-                // Display the selected recipe in the ListView
-                if (selectedIndex >= 0 && selectedIndex < RecipeList.Count)
+            // Add heading for Recipe Name
+            TextBlock recipeNameHeadingTextBlock = new TextBlock();
+            recipeNameHeadingTextBlock.Text = $"Recipe Name: {RecipeList[selectedIndex].Name}";
+            recipeNameHeadingTextBlock.FontSize = 18;
+            recipeNameHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+            recipeNameHeadingTextBlock.HorizontalAlignment = HorizontalAlignment.Center; // Align center
+            recPanel.Children.Add(recipeNameHeadingTextBlock);
+
+            // Add heading for Total Calories
+            TextBlock totalCaloriesHeadingTextBlock = new TextBlock();
+            totalCaloriesHeadingTextBlock.Text = $"Total Calories: {RecipeList[selectedIndex].totalCalories} Kcal";
+            totalCaloriesHeadingTextBlock.FontSize = 15;
+            totalCaloriesHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+            totalCaloriesHeadingTextBlock.HorizontalAlignment = HorizontalAlignment.Left; // Align left
+            recPanel.Children.Add(totalCaloriesHeadingTextBlock);
+
+
+            // Add heading for Ingredients
+            TextBlock ingredientsHeadingTextBlock = new TextBlock();
+            ingredientsHeadingTextBlock.Text = "Ingredients";
+            ingredientsHeadingTextBlock.FontSize = 15;
+            ingredientsHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+            recPanel.Children.Add(ingredientsHeadingTextBlock);
+
+            // Populate the StackPanel with the transformed ingredient list
+            var recipeIngs = RecipeList[selectedIndex].IngredientList.Select((ingre, index) => new
+            {
+                Number = $"{index + 1} ",
+                IngredientInfo = $"{ingre.Quantity.ToString()} {ingre.UnitofM} of {ingre.Name}",
+                Calories = ingre.Calories,
+                FoodGroup = ingre.FoodGroup
+            }).ToList();
+
+            // Create CheckBox and TextBox for each ingredient and add them to the StackPanel
+            foreach (var ingredient in recipeIngs)
+            {
+                StackPanel ingredientPanel = new StackPanel();
+                ingredientPanel.Orientation = Orientation.Horizontal;
+
+                CheckBox ingredientCheckBox = new CheckBox();
+                ingredientCheckBox.VerticalAlignment = VerticalAlignment.Center;
+                ingredientPanel.Children.Add(ingredientCheckBox);
+
+                TextBox ingredientTextBox = new TextBox();
+                ingredientTextBox.Text = ingredient.IngredientInfo;
+                ingredientTextBox.Margin = new Thickness(5, 0, 0, 0);
+                ingredientPanel.Children.Add(ingredientTextBox);
+
+                recPanel.Children.Add(ingredientPanel);
+            }
+
+            // Add heading for Instructions
+            TextBlock instructionsHeadingTextBlock = new TextBlock();
+            instructionsHeadingTextBlock.Text = "Instructions";
+            instructionsHeadingTextBlock.FontSize = 15;
+            instructionsHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+            recPanel.Children.Add(instructionsHeadingTextBlock);
+
+
+            // Populate the StackPanel with the transformed step list
+            var stepList = RecipeList[selectedIndex].Steps.Select((step, index) => new
+            {
+                Number = $"Step {index + 1}: ",
+                StepDescription = step
+            }).ToList();
+
+            // Create CheckBox and TextBox for each step and add them to the StackPanel
+            foreach (var step in stepList)
+            {
+                StackPanel stepPanel = new StackPanel();
+                stepPanel.Orientation = Orientation.Horizontal;
+
+                CheckBox stepCheckBox = new CheckBox();
+                stepCheckBox.VerticalAlignment = VerticalAlignment.Center;
+                stepPanel.Children.Add(stepCheckBox);
+
+                TextBox stepTextBox = new TextBox();
+                stepTextBox.Text = step.StepDescription;
+                stepTextBox.Margin = new Thickness(5, 0, 0, 0);
+                stepPanel.Children.Add(stepTextBox);
+
+                recPanel.Children.Add(stepPanel);
+            }
+
+            
+        }
+
+        private void DisplayAll()
+        {
+
+            // Clear the existing content in the StackPanel
+            recPanel.Children.Clear();
+            for (int curRec = 0; curRec < RecipeList.Count; curRec++)
+            {
+
+                // Add heading for Recipe Name
+                TextBlock recipeNameHeadingTextBlock = new TextBlock();
+                recipeNameHeadingTextBlock.Text = $"Recipe Name: {RecipeList[curRec].Name}";
+                recipeNameHeadingTextBlock.FontSize = 18;
+                recipeNameHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+                recipeNameHeadingTextBlock.HorizontalAlignment = HorizontalAlignment.Center; // Align center
+                recPanel.Children.Add(recipeNameHeadingTextBlock);
+
+                // Add heading for Total Calories
+                TextBlock totalCaloriesHeadingTextBlock = new TextBlock();
+                totalCaloriesHeadingTextBlock.Text = $"Total Calories: {RecipeList[curRec].totalCalories} Kcal";
+                totalCaloriesHeadingTextBlock.FontSize = 15;
+                totalCaloriesHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+                totalCaloriesHeadingTextBlock.HorizontalAlignment = HorizontalAlignment.Left; // Align left
+                recPanel.Children.Add(totalCaloriesHeadingTextBlock);
+
+
+                // Add heading for Ingredients
+                TextBlock ingredientsHeadingTextBlock = new TextBlock();
+                ingredientsHeadingTextBlock.Text = "Ingredients";
+                ingredientsHeadingTextBlock.FontSize = 15;
+                ingredientsHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+                recPanel.Children.Add(ingredientsHeadingTextBlock);
+
+                // Populate the StackPanel with the transformed ingredient list
+                var recipeIngs = RecipeList[curRec].IngredientList.Select((ingre, index) => new
                 {
-                    Recipe selectedRecipe = RecipeList[selectedIndex];
+                    Number = $"{index + 1} ",
+                    IngredientInfo = $"{ingre.Quantity.ToString()} {ingre.UnitofM} of {ingre.Name}",
+                    Calories = ingre.Calories,
+                    FoodGroup = ingre.FoodGroup
+                }).ToList();
 
-                    // Populate the ListView with the transformed ingredient list
-                    var recipeIngs = selectedRecipe.IngredientList.Select((ingre, index) => new
-                    {
-                        Number = $"{index + 1} ",IngredientInfo = $"{ingre.Quantity.ToString()} {ingre.UnitofM} of {ingre.Name}",Calories = ingre.Calories,FoodGroup = ingre.FoodGroup}).ToList();
+                // Create CheckBox and TextBox for each ingredient and add them to the StackPanel
+                foreach (var ingredient in recipeIngs)
+                {
+                    StackPanel ingredientPanel = new StackPanel();
+                    ingredientPanel.Orientation = Orientation.Horizontal;
 
-                    var stepList = selectedRecipe.Steps.Select((step, index) => new
-                    {
-                        Number = $"Step {index + 1}: ",StepDescription = step }).ToList();
-                    // Clear the existing content in the StackPanel
-                   /* ingredientsStackPanel.Children.Clear();
-                    stepsStackPanel.Children.Clear();*/
+                    CheckBox ingredientCheckBox = new CheckBox();
+                    ingredientCheckBox.VerticalAlignment = VerticalAlignment.Center;
+                    ingredientPanel.Children.Add(ingredientCheckBox);
 
-                    // Create CheckBox and TextBox for each ingredient and add them to the StackPanel
-                    foreach (var ingredient in recipeIngs)
-                    {
-                        StackPanel ingredientPanel = new StackPanel();
-                        ingredientPanel.Orientation = Orientation.Horizontal;
+                    TextBox ingredientTextBox = new TextBox();
+                    ingredientTextBox.Text = ingredient.IngredientInfo;
+                    ingredientTextBox.Margin = new Thickness(5, 0, 0, 0);
+                    ingredientPanel.Children.Add(ingredientTextBox);
 
-                        CheckBox ingredientCheckBox = new CheckBox();
-                        ingredientCheckBox.VerticalAlignment = VerticalAlignment.Center;
-                        ingredientPanel.Children.Add(ingredientCheckBox);
+                    recPanel.Children.Add(ingredientPanel);
+                }
 
-                        TextBox ingredientTextBox = new TextBox();
-                        ingredientTextBox.Text = ingredient.IngredientInfo;
-                        ingredientTextBox.Margin = new Thickness(5, 0, 0, 0);
-                        ingredientPanel.Children.Add(ingredientTextBox);
+                // Add heading for Instructions
+                TextBlock instructionsHeadingTextBlock = new TextBlock();
+                instructionsHeadingTextBlock.Text = "Instructions";
+                instructionsHeadingTextBlock.FontSize = 15;
+                instructionsHeadingTextBlock.FontWeight = FontWeights.SemiBold;
+                recPanel.Children.Add(instructionsHeadingTextBlock);
 
-                        ingredientsStackPanel.Children.Add(ingredientPanel);
-                    }
-                    foreach (var step in stepList )
-                    {
-                        StackPanel stepPanel = new StackPanel();
-                        stepPanel.Orientation = Orientation.Horizontal;
+                // Populate the StackPanel with the transformed step list
+                var stepList = RecipeList[curRec].Steps.Select((step, index) => new
+                {
+                    Number = $"Step {index + 1}: ",
+                    StepDescription = step
+                }).ToList();
 
-                        CheckBox stepCheckBox = new CheckBox();
-                        stepCheckBox.VerticalAlignment = VerticalAlignment.Center;
-                        stepPanel.Children.Add(stepCheckBox);
+                // Create CheckBox and TextBox for each step and add them to the StackPanel
+                foreach (var step in stepList)
+                {
+                    StackPanel stepPanel = new StackPanel();
+                    stepPanel.Orientation = Orientation.Horizontal;
 
-                        TextBox stepTextBox = new TextBox();
-                        stepTextBox.Text = step.StepDescription;
-                        stepTextBox.Margin = new Thickness(5, 0, 0, 0);
-                        stepPanel.Children.Add(stepTextBox);
+                    CheckBox stepCheckBox = new CheckBox();
+                    stepCheckBox.VerticalAlignment = VerticalAlignment.Center;
+                    stepPanel.Children.Add(stepCheckBox);
 
-                        stepsStackPanel.Children.Add(stepPanel);
-                    }
+                    TextBox stepTextBox = new TextBox();
+                    stepTextBox.Text = step.StepDescription;
+                    stepTextBox.Margin = new Thickness(5, 0, 0, 0);
+                    stepPanel.Children.Add(stepTextBox);
 
-                    recipeNameTextBlock.Text = $"Recipe Name: {selectedRecipe.Name}";
-                    totalCaloriesTextBlock.Text = $"Total Calories: {selectedRecipe.totalCalories} Kcal";
+                    recPanel.Children.Add(stepPanel);
                 }
             }
         }
 
+
+
        
         private void returnMenu_Click(object sender, RoutedEventArgs e)
         {
-            UserMenu userMenu = new UserMenu();
+            UserMenu userMenu = new UserMenu(RecipeList);
             this.Hide();
             userMenu.Show();
         }
-
 
        
     }

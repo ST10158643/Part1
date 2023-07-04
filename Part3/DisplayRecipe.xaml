@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Part3"
         mc:Ignorable="d"
-        Title="Display Recipe" Height="560" Width="800">
-    <Grid>
+        Title="DisplayRecipe" Height="800" Width="800">
+    <Grid Background="#F598">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -18,30 +18,21 @@
         <TextBlock Text="Display Recipe" FontSize="30" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
 
         <!-- ComboBox for recipe selection -->
-        <ComboBox x:Name="recipeComboBox" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="200" SelectedIndex="0" SelectionChanged="RecipeComboBox_SelectionChanged">
+        <ComboBox x:Name="recipeComboBox" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="200" SelectedIndex="0" >
             <ComboBoxItem Content="All Recipes"/>
             <!-- Add ComboBoxItems for each individual recipe -->
         </ComboBox>
-
+        <Button x:Name="displayBtn" Content="Display" Click="displayBtn_Click" Width="116" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="274,51,0,0"/>
         <!-- Recipe details -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
-            <TextBlock x:Name="recipeNameTextBlock" Text="Recipe Name:" Width="200" VerticalAlignment="Center" FontFamily="Bahnschrift Light" FontSize="16" Margin="20,0,0,0"/>
-            <TextBlock x:Name="totalCaloriesTextBlock" Text="Total Calories:" Width="200" FontFamily="Bahnschrift Light" FontSize="16" VerticalAlignment="Bottom" Margin="300,0,0,0" RenderTransformOrigin="0.776,0.535"/>
-        </StackPanel>
 
-        <!-- StackPanel for ingredients -->
-        <StackPanel Grid.Row="2" Margin="10" Background="#F0F0F0">
-            <TextBlock x:Name="ingTB" Text="Ingredients:" FontFamily="Bahnschrift Light" FontSize="16" HorizontalAlignment="Left" Margin="2,5,5,5"/>
-            <StackPanel x:Name="ingredientsStackPanel" Margin="10,5,0,0"/>
-        </StackPanel>
-
-        <!-- StackPanel for Steps -->
-        <StackPanel Grid.Row="2" Margin="255,10,10,10" Background="#F0F0F0">
-            <TextBlock x:Name="stepBlock" Text="Instructions:" FontFamily="Bahnschrift Light" FontSize="16" HorizontalAlignment="Left" Margin="2,5,5,5"/>
-            <StackPanel x:Name="stepsStackPanel" Margin="10,5,0,0"/>
-        </StackPanel>
-
+        <ScrollViewer x:Name="recipeScroll" Margin="44,17,46,16" Grid.Row="2">
+            <StackPanel Margin="10,0,0,0" Width="671" Height="644">
+                <StackPanel x:Name="recPanel" Margin="0,10,0,0" Background="#F0F0F0" Width="622" Height="376">
+                    
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
         <!-- Button for returning to the menu -->
-        <Button x:Name="returnMenu" Content="Home Menu" HorizontalAlignment="Left" Margin="650,37,0,0" VerticalAlignment="Top" Width="100" Click="returnMenu_Click"/>
+        <Button x:Name="returnMenu" Content="Home Menu" HorizontalAlignment="Left" Margin="650,24,0,0" VerticalAlignment="Top" Width="100" Click="returnMenu_Click"/>
     </Grid>
 </Window>
