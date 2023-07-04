@@ -2,7 +2,7 @@
 
 ## Overview
 
-Part2 command-line application is a Console App built on the .NET framework 4.8.
+Part3 is a Windows Presentation Foundation (WPF) Console App built on the .NET framework 4.8.
 The Recipe Application is a user-friendly tool that allows a user to create and manage recipes.
 With this application, you can easily enter the details of your recipe, including the ingredients and steps involved. 
 The Recipe Application application was developed as a project for the PROGRAMMING 2A course POE Submission and serves 
@@ -25,7 +25,7 @@ To install the application, follow these steps:
 To use the application, follow these steps:
 
 1. Launch the application by following the installation instructions above.
-2. Select option 1 from the user menu to create a recipe.
+2. Click "Create Recipe" from the user menu to create a recipe.
 3. Enter the name of recipe you would like to capture for a recipe.
 4. Enter the ingredients name, quantity and unit of measure, one at a time.
 5. Enter the steps for the recipe, one at a time.
@@ -42,6 +42,8 @@ The Recipe app has undergone several updates to enhance its functionality and us
 4. Recipe Modification: Users now have the ability to make modifications to all stored recipes. They can update the recipe name, ingredients, quantities, food groupings, calorie counts, or any other details as needed. This feature allows users to refine their recipes over time and adapt them to their evolving preferences.
 5. View All Option: The app includes a "Display All" option that displays all stored recipes in alphabetical order. This makes it convenient for users to browse through their recipe collection and quickly locate specific recipes based on their names.
 These updates significantly enhance the versatility and usability of the Recipe app, providing users with more control over their recipe management and enabling them to create, store, and modify recipes according to their individual preferences and dietary requirements.
+6. The application has been updated with a sleek and intuitive Graphical User Interface (GUI) developed using Windows Presentation Foundation (WPF)
+7.  the application allows you to effortlessly filter the list of recipes by the name of an ingredient, specific food group and by a set a maximum number of calories to help you find recipes that fit the users dietary preferences.
 
 ## Review From Feedback
 Feedback: After the user chose no on clear option , handle the exception. Code must not crush
